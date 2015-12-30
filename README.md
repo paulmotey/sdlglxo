@@ -1,6 +1,5 @@
-<<<<<<< HEAD
-"# sdlglxo" 
-=======
-# sdlglxo
-The other repo
->>>>>>> c0e4e3fd433d41570a6de879dd9c525a629d50d0
+This a fully functional SDL on Windows 10
+It uses Mingw
+Should show a rotating image
+However the screen position could be odd for other configurations
+So... YMMV
