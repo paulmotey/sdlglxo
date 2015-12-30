@@ -5,10 +5,11 @@
  *      Author: motey
  */
 
-
+//#define WIN32
 //#include <string>
 //#include <iostream>
 #include <SDL.h>
+//#include <SDLmain.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
@@ -23,7 +24,7 @@
 //A triangle and then a texture
 int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 	double rotation=1.0;
-	std::string imagePath = getResourcePath("") + "im256.png";
+	std::string imagePath = getResourcePath("") + "Five_colors.png";
 	SDL_Surface *bmp = IMG_Load(imagePath.c_str());
 	if (bmp == nullptr) {
 		SDL_DestroyRenderer(ren);
