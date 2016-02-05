@@ -35,3 +35,4 @@ sdlmain.exe
 .project
 .cproject
 makefile
+/Release/

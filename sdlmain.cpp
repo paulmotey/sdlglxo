@@ -25,11 +25,12 @@
 int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 	double rotation=1.0;
 	std::string imagePath = getResourcePath("") + "Five_colors.png";
+	std::cout << imagePath <<std::endl;
 	SDL_Surface *bmp = IMG_Load(imagePath.c_str());
 	if (bmp == nullptr) {
 		SDL_DestroyRenderer(ren);
 		SDL_DestroyWindow(win);
-		std::cout << "IMG_Load Error: " << SDL_GetError() << std::endl;
+		std::cout << "IMG_Load File Error: " << SDL_GetError() << std::endl;
 		SDL_Quit();
 		return 4;
 	}

@@ -8,7 +8,10 @@ ifneq (, $(findstring linux, $(SYS)))
 else
     MACHINE=-DWIN
 #    LIBS = -lC:\Users\motey\Downloads\SDL2-devel-2.0.3-VC\SDL2-2.0.3\lib\x64\SDL2.lib -lSDL2 -lws2_32
-    LIBS = -lSDL2main -lSDL2   -lSDL2_image -lopengl32 -lws2_32
+    LIBSA = 
+    LIBSB = -lSDL2main -lSDL2   -lSDL2_image  -lopengl32 -lws2_32
+    INCL= -L\Users\motey\Downloads\SDL2-2.0.3\lib
+    INC= -I\Users\motey\Downloads\SDL2-2.0.3\include
 endif
 CC=g++
 CFLAGS = -g 
@@ -17,7 +20,6 @@ CFLAGS = -g
 PROJECT		=	Ants20116
 PROJECTM	=	sdlmain
 
-INC= -I\Users\motey\Downloads\SDL2-devel-2.0.3-VC\SDL2-2.0.3\include
 
 HOBJECTS := $(wildcard Headers/Ants2016*.h)
 #COBJECTS := $(wildcard $(PROJECT)*.cpp)
@@ -37,8 +39,8 @@ all:  $(PROJECTM)
 $(PROJECTM):  $(PROJECTM).cpp
 	@echo $(MACHINE)
 	@echo $(INC)
-	@echo $(LIB)
+	@echo $(LIBS)
 	@echo $(SYS)
 	 
-	$(CC) $(MACHINE) $(INCLUDES) $(PROJECTM).cpp $(INC) $(LIBS) -o $(PROJECTM) $(OBJECTS) 
+	$(CC) $(MACHINE) $(INCLUDES) $(PROJECTM).cpp $(INC) $(INCL) -Wl,-Bstatic $(LIBSA) $(LIBSB) -o $(PROJECTM) $(OBJECTS) 
 
