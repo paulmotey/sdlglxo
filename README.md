@@ -4,7 +4,9 @@ Should show a rotating image
 However the screen position could be odd for other configurations
 So... YMMV
 This may have been more complicated than it should have been as I dived into this without taking a stepwise approach to the new complexities.
-What is new is 
+What is new is:
+
+
 1. Windows 10 and the strange locations of files
 2. SDL2 on Windows
 3. OpenGL on Windows
@@ -21,10 +23,11 @@ What is new is
 14. and all the strange interactions
 15. Notepad ++ (GREAT PROGRAM) I recommend this
 16. Odd Windows location of configuration for almost everything
+
+
 As a result I have learned a lot, but it has been very confusing to have so many things to learn at once when I am familiar with Linux and the available tools that do not translate perfectly to pseudo linux development mode.
 So it was a very painful week and then a month before I could look at it again and fix all the little dings and dents that came with the confusion.
 It now runs and compiles on both platforms consistently and this is the core that I needed to transport a very large OpenGL code base from Linux to be a cross platform utility that could run as an application on Android, WebGL, and as a stand alone program on Linux and Windows.
-
 
 |  | Windows 10 | Linux | 
 | :---: |:---: | :---: |
