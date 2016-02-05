@@ -4,12 +4,7 @@
  *  Created on: Dec 27, 2015
  *      Author: motey
  */
-
-//#define WIN32
-//#include <string>
-//#include <iostream>
 #include <SDL.h>
-//#include <SDLmain.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
@@ -77,9 +72,7 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 	for (int i = 0; i < 70; ++i) {
 		//First clear the renderer
 		SDL_RenderClear(ren);
-		glRotatef(rotation,1.0,0.0,1.0);
 		SDL_RenderCopyEx(ren, tex, NULL, NULL,rotation,NULL,SDL_FLIP_NONE);
-		glRotatef(rotation,1.0,0.0,1.0);
 		SDL_RenderPresent(ren);
 		rotation+=10.0;
 		SDL_Delay(100);
