@@ -1,4 +1,19 @@
+##STAGE 1
+
 This a fully functional SDL on Windows 10
+
+It is also fully functional on Linux
+
+##STAGE 2
+
+- [ ] Move includes to header file
+- [ ] Separate OPENGL graphics to a module
+- [ ] Create a keyboard command interface for modes
+- [ ] Create WebGL and Application personalities
+- [ ] Create mouse command interface
+- [ ] Port modules for buttons and menus
+- [ ] Port all test modules
+
 It uses Mingw
 Should show a rotating image
 However the screen position could be odd for other configurations
