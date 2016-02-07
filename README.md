@@ -6,18 +6,53 @@ It is also fully functional on Linux
 
 ##STAGE 2
 
+###WEB page added for all projects
+
+http://paulmotey.github.io/
+
 - [ ] Move includes to header file
-- [ ] Separate OPENGL graphics to a module
+- [x] Separate OPENGL graphics to a module (graphics)
 - [ ] Create a keyboard command interface for modes
 - [ ] Create WebGL and Application personalities
 - [ ] Create mouse command interface
 - [ ] Port modules for buttons and menus
 - [ ] Port all test modules
+- [ ] Identify capabilities and operate within them
+- [ ] Use international language interface
 
-It uses Mingw
+###QUESTIONS
+- [x] can markdown be converted to HTML **YES pandoc -f markdown_github x.md > x.html**
+- [X] can assimp operate in Windows OS? **YES**
+- [ ] how does QT work across platforms
+- [ ] what fonts are available
+- [ ] how to open camera and sound interfaces
+- [ ] signal fault handler and debug
+- [ ] opencv
+- [ ] python
+- [ ] language detection 
+
+##STAGE 3
+
+- [ ] 3D to matter interface for printers
+- [ ] 4D to action interface for printers
+- [ ] AI integration
+
+
+##Windows only problems
+
+It is bizarre that the **BSD** still exists in Windows 10
+
+It is a symptom of a poorly designed OS. You would think that all that money they made that at least 1% would be put to improving the design to a point that it was a **REAL** operating system and not an accident waiting to happen.
+ 
+
+This uses MinGW
+
 Should show a rotating image
+
 However the screen position could be odd for other configurations
+
 So... YMMV
+
 This may have been more complicated than it should have been as I dived into this without taking a stepwise approach to the new complexities.
 What is new is:
 
@@ -38,10 +73,40 @@ What is new is:
 14. and all the strange interactions
 15. Notepad ++ (GREAT PROGRAM) I recommend this
 16. Odd Windows location of configuration for almost everything
+17. **pandoc** is very handy for markdown to html or other formats
 
+This CSS could be added to enhance pandoc to html
 
-As a result I have learned a lot, but it has been very confusing to have so many things to learn at once when I am familiar with Linux and the available tools that do not translate perfectly to pseudo linux development mode.
-So it was a very painful week and then a month before I could look at it again and fix all the little dings and dents that came with the confusion.
+```
+<script>
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 24px;
+    border-spacing: 0;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+}
+table th {
+    padding: 3px 10px;
+    background-color: white;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+}
+table td {
+    padding: 3px 10px;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    border-right: none;
+}
+</script>
+```
+
+As a result I have learned a lot, but it has been very confusing to have so many things to learn at once when I am familiar with Linux and the available tools that do not translate perfectly to pseudo Linux development mode.
+So it was a very painful week and then a month before I could look at it again and fix all the messes that came with the confusion.
 It now runs and compiles on both platforms consistently and this is the core that I needed to transport a very large OpenGL code base from Linux to be a cross platform utility that could run as an application on Android, WebGL, and as a stand alone program on Linux and Windows.
 
 |  | Windows 10 | Linux | 
@@ -50,7 +115,7 @@ It now runs and compiles on both platforms consistently and this is the core tha
 | branch | *linuxsdl*  | *master* |
 
 This program uses SDL2 libraries and shows RGB solid colors and then a rotating image, 
-It uses Mingw to compile with Eclipse, make on Windows is broken because of 
+It uses MinGW to compile with Eclipse, make on Windows is broken because of 
 library structure (may be my fault by improper installation)
 
 
@@ -120,9 +185,9 @@ and working by night wandering aimlessly through complex APIs and drop down menu
 Finally after you accept help from what appears to be a good samaritan and try Windows Visual Studio free trial 
 and it works somewhat and then 30 days later when you are still trying to figure out how to use it effectively, they turn
 around and mug you for money and steal your configuration and hold it for ransom.
-The linux version works almost immediately and after wandering about in the dark running into trees that look like
+The Linux version works almost immediately and after wandering about in the dark running into trees that look like
 solutions and turn out to be bears you happen upon a meadow where everything works and you think you are home but ...
-the nagging question is: Is this some special place like a local minimum that works today at this time and will disappear 
+the obvious question is: Is this some special place like a local minimum that works today at this time and will disappear 
 at random and you will be left in the dark, naked and screaming that you wish you were doing something simpler, like brain surgery?
 
 - [x] some done

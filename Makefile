@@ -18,7 +18,6 @@ CC=g++
 CFLAGS = -g 
 
 
-PROJECT		=	Ants20116
 PROJECTM	=	sdlmain
 
 
