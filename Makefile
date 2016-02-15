@@ -1,15 +1,18 @@
-
+MODULES = graphics.o
+MODULESL = graphics.o
 SYS := $(shell gcc -dumpmachine)
 UNAME := $(shell uname)
 
 ifneq (, $(findstring linux, $(SYS)))
     MACHINE=-DLINUX
 	LIBS =	-lz -lGL -lSDL2 -lSDL2_image    # Do linux things
+	LIBSB =
+	WINC = 
 else
     MACHINE=-DWIN
 #    LIBS = -lC:\Users\motey\Downloads\SDL2-devel-2.0.3-VC\SDL2-2.0.3\lib\x64\SDL2.lib -lSDL2 -lws2_32
-	LIBS = 
-	LIBSA = 
+    WINC = -Wl,-Bstatic
+    LIBS = 
     LIBSB = -lSDL2main -lSDL2   -lSDL2_image  -lopengl32 -lws2_32
     INCL= -L\Users\motey\Downloads\SDL2-2.0.3\lib
     INC= -I\Users\motey\Downloads\SDL2-2.0.3\include
@@ -34,12 +37,16 @@ OBJECTS = 	$(OBJS)
 DEPENDS	= 	$(HOBJECTS) Makefile 
 
 .PHONY: all
-all:  $(PROJECTM) 
+all:   graphics.o $(PROJECTM)
 
-$(PROJECTM):  $(PROJECTM).cpp $(DEPENDS)
+graphics.o: graphics.cpp 
+	$(CC) -c  $(MACHINE) $<
+	
+	
+$(PROJECTM):  $(PROJECTM).cpp $(DEPENDS) $(MODULES) 
 	@echo $(MACHINE)
 	@echo $(INC)
 	@echo $(SYS)
 	 
-	$(CC) $(MACHINE) $(INCLUDES) $(PROJECTM).cpp $(INC) $(INCL) -Wl,-Bstatic $(LIBSA) $(LIBSB) -o $(PROJECTM) $(OBJECTS) 
+	$(CC) $(MACHINE) $(INCLUDES) $(PROJECTM).cpp $(INC) $(MODULES) $(INCL) $(WINC) $(LIBS) $(LIBSB) -o $(PROJECTM) $(OBJECTS) 
 
