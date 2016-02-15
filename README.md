@@ -74,11 +74,22 @@ What is new is:
 15. Notepad ++ (GREAT PROGRAM) I recommend this
 16. Odd Windows location of configuration for almost everything
 17. **pandoc** is very handy for markdown to html or other formats
+18. Still learning new uses of pandoc and markdown
 
-This CSS could be added to enhance pandoc to html
+
+| example | how to |
+| ---|---:|
+|__underscore?__ |__|
+|_underscore?_ |_|
+|*italics*      |*|
+|**bold**       |**|
+|--strikethrough?-- |--|
+
+
+This CSS *could* be added to enhance pandoc to html
 
 ```
-<script>
+<style type="text/css">
 table {
     margin-left: auto;
     margin-right: auto;
@@ -102,7 +113,7 @@ table td {
     border-bottom: none;
     border-right: none;
 }
-</script>
+</style>
 ```
 
 As a result I have learned a lot, but it has been very confusing to have so many things to learn at once when I am familiar with Linux and the available tools that do not translate perfectly to pseudo Linux development mode.
