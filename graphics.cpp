@@ -509,8 +509,8 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //		glDisable(GL_LIGHTING);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_TEXTURE_2D);
-		float tw=1.0;
-		float th=1.0;
+//		float tw=1.0;
+//		float th=1.0;
         glBindTexture(GL_TEXTURE_2D, TextureID);
 //        SDL_GL_BindTexture(tex, &tw, &th);
 		for (int i = 0; i < howLong; ++i) {
@@ -610,14 +610,30 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //A triangle, text and then a texture
 int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 //	int noler=0;
+	float m[16];
 	if (TTF_Init() < 0) {return 55;}
+	glGetFloatv(GL_PROJECTION_MATRIX,m);
+	std::cout<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
+	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
+	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
+	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
+	glGetFloatv(GL_MODELVIEW_MATRIX,m);
+	std::cout<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
+	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
+	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
+	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
+
 	while ((keyScape == 0) && (testErr ==0)){
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+glPushMatrix();
 		testErr=blackTriangle(ren,win,200);
 		testErr=drawLine1(ren,win,400);
-		testErr=Rotex(ren, win, 100);
-		testErr=Triangles(ren, win,  200);
-		testErr=TestText(ren, win, "Simple variable size TTF text Version 0.4 14pt (16 px)",2000);
 		testErr=drawBoxPLS(ren, win,1000,0.5,6,8,0.0,-0.20,-0.50);
+		testErr=Triangles(ren, win,  200);
+glPopMatrix();
+		testErr=Rotex(ren, win, 100);
+		testErr=TestText(ren, win, "Simple variable size TTF text Version 0.4 14pt (16 px)",2000);
 		process_events();
 	}
 	TTF_Quit();
