@@ -1,3 +1,9 @@
+
+Changes in this version (0.3) 2-16-2016
+Added ttf (true type font) text as texture
+Added **SDL2_ttf** as library for linux or TTF does not work properly
+
+
 ##STAGE 1
 
 This a fully functional SDL on Windows 10
