@@ -59,11 +59,11 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
 	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
 	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
-	glGetFloatv(GL_MODELVIEW_MATRIX,m);
-	std::cout<<"MODELVIEW "<<std::endl<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
-	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
-	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
-	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
+//	glGetFloatv(GL_MODELVIEW_MATRIX,m);
+//	std::cout<<"MODELVIEW "<<std::endl<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
+//	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
+//	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
+//	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
 
 	GlSdlTest1(ren, win, context);
 	SDL_DestroyRenderer(ren);

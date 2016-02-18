@@ -1,7 +1,13 @@
 
+Changes in this version (0.4) 2-17-2016
+tested 3D BOX, lines, points, textured quads 
+Included diagnostic to console to view PERSPECTIVE matrix
+Oddly the Linux version has a different matrix when context is created
+Also the texture copy feature operates differently and changes blend characteristics
+
 Changes in this version (0.3) 2-16-2016
 Added ttf (true type font) text as texture
-Added **SDL2_ttf** as library for linux or TTF does not work properly
+Added **SDL2_ttf** as library for Linux or TTF does not work properly
 
 
 ##STAGE 1

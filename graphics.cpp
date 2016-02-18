@@ -61,16 +61,17 @@ static void process_events( void )
     /* Grab all the events off the queue. */
     while( SDL_PollEvent( &event ) ) {
     	int value = event.key.keysym.scancode;
-        if (value == SDLK_ESCAPE) {	testErr=3; }
+        if (value == SDLK_ESCAPE) {	testErr=3; }//Not sure about this TEST IT!
 
         switch( event.type ) {
         case SDL_KEYDOWN:
-    		std::cout << "KEY pressed down " << std::endl;
+//    		std::cout << "KEY pressed down " << std::endl;
     		keyScape=1;
             /* Handle key presses. */
             //handle_key_down( &event.type );
             break;
         case SDL_QUIT:
+    		keyScape=1;
             /* Handle quit requests (like Ctrl-c). */
             //quit_tutorial( 0 );
             break;
@@ -118,11 +119,11 @@ int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
 	SDL_Color White = {255, 255, 255, 255}; //Text color
 	//SDL_Color foregroundColor = { 255, 255, 255 ,255};
     SDL_Color backgroundColor = { 64, 64, 128 ,255};
+    SDL_Color backgroundColor2 = { 255, 255, 255 ,255};
 
 	glClearColor(0.2, 0.30, 0.4, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_RenderClear(ren);
-try {
 	TTF_Font* Sans = TTF_OpenFont("FreeSans.ttf",14);
 	if (Sans == NULL){
 		std::cout << "TTF FreeSans failed to load."<<std::endl; //Diagnostic
@@ -138,6 +139,7 @@ try {
 //	std::cout << "TTF Texture is "<<iW<<"W x "<<iH<<"H"<<std::endl; //Diagnostic
 	Message_rect.w = iW;
 	Message_rect.h = iH;
+try {
 	//Renderer,converted texture,cropsize(or NULL), rectangle
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 	SDL_RenderPresent(ren);
@@ -148,6 +150,12 @@ try {
 	std::cout << "TTF Sans surface created to texture ERROR"<<std::endl; //Diagnostic
 //REFERENCE     std::cout << e.what(); // information from length_error printed
  }
+		surfaceMessage = TTF_RenderText_Shaded(Sans,text.c_str(), White,backgroundColor2);
+		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+//		SDL_RenderPresent(ren);
+		SDL_DestroyTexture(Message);
+		SDL_FreeSurface(surfaceMessage);
      return 0;
 }
 //Rotating Texture
@@ -609,7 +617,6 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 
 //A triangle, text and then a texture
 int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
-//	int noler=0;
 	float m[16];
 	if (TTF_Init() < 0) {return 55;}
 	glGetFloatv(GL_PROJECTION_MATRIX,m);
@@ -617,11 +624,11 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
 	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
 	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
-	glGetFloatv(GL_MODELVIEW_MATRIX,m);
-	std::cout<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
-	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
-	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
-	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
+//	glGetFloatv(GL_MODELVIEW_MATRIX,m);
+//	std::cout<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
+//	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
+//	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
+//	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
 
 	while ((keyScape == 0) && (testErr ==0)){
 glMatrixMode(GL_PROJECTION);
