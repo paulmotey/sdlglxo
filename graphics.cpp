@@ -28,6 +28,8 @@
 #endif
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <locale>
 std::string getResourcePath(const std::string &subDir = "") {
 #ifdef _WIN32
 	const char PATH_SEP = '\\';
@@ -321,13 +323,16 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#ifdef _WIN32
+			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#endif
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
 		}
 	}
 	rotation=0.05;
+	delta=0.0;
 	if (types & 2){
 		for (int i = 0; i < howLong; ++i) {
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -408,7 +413,9 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#ifdef _WIN32
+			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#endif
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
@@ -476,7 +483,9 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 //			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#ifdef _WIN32
+			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#endif
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
@@ -603,7 +612,9 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 //			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
+#ifdef _WIN32
 			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#endif
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
@@ -624,7 +635,7 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 	if (TTF_Init() < 0) {return 55;}
 	glGetFloatv(GL_PROJECTION_MATRIX,m);
 	std::cout<<"PROJECTION "<<std::endl;
-	std::cout<<m[0]<<"\t "<<m[1]<<"\t "<<m[2]<<"\t "<<m[3]<<std::endl;
+	std::cout<<std::setw(2)<<m[0]<<"\t "<<std::setw(2)<<m[1]<<"\t "<<m[2]<<"\t "<<m[3]<<std::endl;
 	std::cout<<m[4]<<"\t "<<m[5]<<"\t "<<m[6]<<"\t "<<m[7]<<std::endl;
 	std::cout<<m[8]<<"\t "<<m[9]<<"\t "<<m[10]<<"\t "<<m[11]<<std::endl;
 	std::cout<<m[12]<<"\t "<<m[13]<<"\t "<<m[14]<<"\t "<<m[15]<<std::endl;
@@ -640,13 +651,13 @@ glPushMatrix();
 glLoadIdentity();
 		testErr=blackTriangle(ren,win,200);
 		testErr=drawLine1(ren,win,400);
-		testErr=drawBoxPLS(ren, win,100,0.5,6,8,0.0,-0.20,-0.50);
+		testErr=drawBoxPLS(ren, win,100,0.5,6,15,0.0,-0.20,-0.50);
 		testErr=Triangles(ren, win,  200);
 glPopMatrix();
 glMatrixMode(GL_MODELVIEW);
 glPushMatrix();
 		testErr=Rotex(ren, win, 100);
-		testErr=TestText(ren, win, "Simple variable size TTF text Version 0.44 14pt (16 px)",2000);
+		testErr=TestText(ren, win, "Simple variable size TTF text Version 0.45 14pt (16/17 px)",2000);
 glPopMatrix();
 		process_events();
 	}
