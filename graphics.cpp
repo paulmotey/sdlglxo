@@ -115,32 +115,35 @@ int Triangles(SDL_Renderer *ren, SDL_Window *win, int howLong){
 }
 
 int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
+	glColor4f(1.0,1.0,1.0,1.0);
 	int iW,iH;
 	SDL_Color White = {255, 255, 255, 255}; //Text color
-	//SDL_Color foregroundColor = { 255, 255, 255 ,255};
-    SDL_Color backgroundColor = { 64, 64, 128 ,255};
+//    SDL_Color foregroundColor = { 255, 255, 255 ,255};
+//    SDL_Color backgroundColor = { 64, 64, 128 ,255};
     SDL_Color backgroundColor2 = { 255, 255, 255 ,255};
 
 	glClearColor(0.2, 0.30, 0.4, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_RenderClear(ren);
+	SDL_Rect Message_rect;
 	TTF_Font* Sans = TTF_OpenFont("FreeSans.ttf",14);
 	if (Sans == NULL){
 		std::cout << "TTF FreeSans failed to load."<<std::endl; //Diagnostic
 		return 1;
 	}
 	//Shaded or Solid added background is shaded
-	SDL_Surface* surfaceMessage = TTF_RenderText_Shaded(Sans,text.c_str(), White,backgroundColor);
+	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans,text.c_str(), White);
 	SDL_Texture* Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	SDL_Rect Message_rect;
+
+try {
 	Message_rect.x = 0;  //Top left
 	Message_rect.y = 0;
 	SDL_QueryTexture(Message, NULL, NULL ,&iW, &iH);
 //	std::cout << "TTF Texture is "<<iW<<"W x "<<iH<<"H"<<std::endl; //Diagnostic
 	Message_rect.w = iW;
 	Message_rect.h = iH;
-try {
-	//Renderer,converted texture,cropsize(or NULL), rectangle
+	SDL_SetTextureBlendMode(Message,SDL_BLENDMODE_NONE);
+	//Renderer,converted texture,crop size(or NULL), rectangle
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 	SDL_RenderPresent(ren);
 	SDL_Delay(howLong);
@@ -154,6 +157,8 @@ try {
 		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 //		SDL_RenderPresent(ren);
+		glColor4f(1.0,1.0,1.0,1.0);
+		glClearColor(1.0,1.0,1.0,1.0);
 		SDL_DestroyTexture(Message);
 		SDL_FreeSurface(surfaceMessage);
      return 0;
@@ -620,10 +625,11 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 	float m[16];
 	if (TTF_Init() < 0) {return 55;}
 	glGetFloatv(GL_PROJECTION_MATRIX,m);
-	std::cout<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
-	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
-	std::cout<<m[8]<<m[9]<<m[10]<<m[11]<<std::endl;
-	std::cout<<m[12]<<m[13]<<m[14]<<m[15]<<std::endl;
+	std::cout<<"PROJECTION "<<std::endl;
+	std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;
+	std::cout<<m[4]<<" "<<m[5]<<" "<<m[6]<<" "<<m[7]<<std::endl;
+	std::cout<<m[8]<<" "<<m[9]<<" "<<m[10]<<" "<<m[11]<<std::endl;
+	std::cout<<m[12]<<" "<<m[13]<<" "<<m[14]<<" "<<m[15]<<std::endl;
 //	glGetFloatv(GL_MODELVIEW_MATRIX,m);
 //	std::cout<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
 //	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
@@ -632,8 +638,8 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 
 	while ((keyScape == 0) && (testErr ==0)){
 glMatrixMode(GL_PROJECTION);
-glLoadIdentity();
 glPushMatrix();
+glLoadIdentity();
 		testErr=blackTriangle(ren,win,200);
 		testErr=drawLine1(ren,win,400);
 		testErr=drawBoxPLS(ren, win,1000,0.5,6,8,0.0,-0.20,-0.50);
