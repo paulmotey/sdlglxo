@@ -603,7 +603,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 //			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
