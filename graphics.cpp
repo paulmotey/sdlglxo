@@ -156,8 +156,8 @@ try {
 //		SDL_RenderPresent(ren);
 		glColor4f(1.0,1.0,1.0,1.0);
 		glClearColor(1.0,1.0,1.0,1.0);
-		SDL_DestroyTexture(Message);
-		SDL_FreeSurface(surfaceMessage);
+//		SDL_DestroyTexture(Message);
+//		SDL_FreeSurface(surfaceMessage);
 		return 0;
 }
 //Rotating Texture
@@ -165,6 +165,7 @@ int Rotex(SDL_Renderer *ren, SDL_Window *win, int howLong) {
 	double rotation=1.0;
 	std::string imagePath = getResourcePath("") + "Five_colors.png";
 	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glColor4f(1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_RenderClear(ren);
 	SDL_Surface *bmp = IMG_Load(imagePath.c_str());
@@ -320,7 +321,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
@@ -407,7 +408,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
@@ -475,7 +476,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 //			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
@@ -602,7 +603,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 //			rotation+=0.010;
 //			glRotatef(rotation,1.0,0.5,0.3);
 			SDL_RenderPresent(ren);
-			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+//			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
 			SDL_Delay(10);
 			process_events();
 			if (keyScape>0){break;}
