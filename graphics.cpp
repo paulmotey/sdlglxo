@@ -131,7 +131,7 @@ int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
 		std::cout << "TTF FreeSans failed to load."<<std::endl; //Diagnostic
 		return 1;
 	}
-	//Shaded or Solid added background is shaded
+
 	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans,text.c_str(), White);
 	SDL_Texture* Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 
@@ -139,20 +139,17 @@ try {
 	Message_rect.x = 0;  //Top left
 	Message_rect.y = 0;
 	SDL_QueryTexture(Message, NULL, NULL ,&iW, &iH);
-//	std::cout << "TTF Texture is "<<iW<<"W x "<<iH<<"H"<<std::endl; //Diagnostic
 	Message_rect.w = iW;
 	Message_rect.h = iH;
 	SDL_SetTextureBlendMode(Message,SDL_BLENDMODE_NONE);
-	//Renderer,converted texture,crop size(or NULL), rectangle
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+	SDL_GL_SwapWindow(win);
 	SDL_RenderPresent(ren);
 	SDL_Delay(howLong);
 	}
-//REFERENCE catch( const std::exception& e ) {
-	 catch( ... ) { // reference to the base of a polymorphic object
-	std::cout << "TTF Sans surface created to texture ERROR"<<std::endl; //Diagnostic
-//REFERENCE     std::cout << e.what(); // information from length_error printed
- }
+	catch( ... ) {
+		std::cout << "TTF Sans surface created to texture ERROR"<<std::endl;
+	}
 		surfaceMessage = TTF_RenderText_Shaded(Sans,text.c_str(), White,backgroundColor2);
 		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
@@ -161,7 +158,7 @@ try {
 		glClearColor(1.0,1.0,1.0,1.0);
 		SDL_DestroyTexture(Message);
 		SDL_FreeSurface(surfaceMessage);
-     return 0;
+		return 0;
 }
 //Rotating Texture
 int Rotex(SDL_Renderer *ren, SDL_Window *win, int howLong) {
@@ -626,10 +623,10 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 	if (TTF_Init() < 0) {return 55;}
 	glGetFloatv(GL_PROJECTION_MATRIX,m);
 	std::cout<<"PROJECTION "<<std::endl;
-	std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;
-	std::cout<<m[4]<<" "<<m[5]<<" "<<m[6]<<" "<<m[7]<<std::endl;
-	std::cout<<m[8]<<" "<<m[9]<<" "<<m[10]<<" "<<m[11]<<std::endl;
-	std::cout<<m[12]<<" "<<m[13]<<" "<<m[14]<<" "<<m[15]<<std::endl;
+	std::cout<<m[0]<<"\t "<<m[1]<<"\t "<<m[2]<<"\t "<<m[3]<<std::endl;
+	std::cout<<m[4]<<"\t "<<m[5]<<"\t "<<m[6]<<"\t "<<m[7]<<std::endl;
+	std::cout<<m[8]<<"\t "<<m[9]<<"\t "<<m[10]<<"\t "<<m[11]<<std::endl;
+	std::cout<<m[12]<<"\t "<<m[13]<<"\t "<<m[14]<<"\t "<<m[15]<<std::endl;
 //	glGetFloatv(GL_MODELVIEW_MATRIX,m);
 //	std::cout<<m[0]<<m[1]<<m[2]<<m[3]<<std::endl;
 //	std::cout<<m[4]<<m[5]<<m[6]<<m[7]<<std::endl;
@@ -642,11 +639,14 @@ glPushMatrix();
 glLoadIdentity();
 		testErr=blackTriangle(ren,win,200);
 		testErr=drawLine1(ren,win,400);
-		testErr=drawBoxPLS(ren, win,1000,0.5,6,8,0.0,-0.20,-0.50);
+		testErr=drawBoxPLS(ren, win,100,0.5,6,8,0.0,-0.20,-0.50);
 		testErr=Triangles(ren, win,  200);
 glPopMatrix();
+glMatrixMode(GL_MODELVIEW);
+glPushMatrix();
 		testErr=Rotex(ren, win, 100);
-		testErr=TestText(ren, win, "Simple variable size TTF text Version 0.4 14pt (16 px)",2000);
+		testErr=TestText(ren, win, "Simple variable size TTF text Version 0.44 14pt (16 px)",2000);
+glPopMatrix();
 		process_events();
 	}
 	TTF_Quit();
