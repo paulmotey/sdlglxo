@@ -52,9 +52,12 @@ std::string getResourcePath(const std::string &subDir = "") {
 	}
 	return subDir.empty() ? baseRes : baseRes + subDir + PATH_SEP;
 }
-
+GLuint TextureID2 = 0;
+GLuint TextureID = 0;
 int testErr=0;
 int keyScape=0;
+double rotation=0.1;
+
 static void process_events( void )
 {
     /* Our SDL event placeholder. */
@@ -115,51 +118,181 @@ int Triangles(SDL_Renderer *ren, SDL_Window *win, int howLong){
 	SDL_Delay(2000);
 	return 0;
 }
+float sizew,sizeh;
 
+SDL_Surface* CS(Uint32 flags,int width,int height,const SDL_Surface* display)
+{
+  // 'display' is the surface whose format you want to match
+  //  if this is really the display format, then use the surface returned from SDL_SetVideoMode
+
+  const SDL_PixelFormat& fmt = *(display->format);
+  return SDL_CreateRGBSurface(flags,width,height,
+                  fmt.BitsPerPixel,
+                  fmt.Rmask,fmt.Gmask,fmt.Bmask,fmt.Amask );
+}
+Uint8 get_pixel32(SDL_Surface *surface, int x, int y){
+	//Convert pixels to 32 bits
+	Uint8 *pixels = (Uint8*)surface->pixels;
+
+	return pixels[(3*y*surface->w) + x];
+}
 int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
 	glColor4f(1.0,1.0,1.0,1.0);
-	int iW,iH;
+//	int iW,iH;
 	SDL_Color White = {255, 255, 255, 255}; //Text color
 //    SDL_Color foregroundColor = { 255, 255, 255 ,255};
-//    SDL_Color backgroundColor = { 64, 64, 128 ,255};
-    SDL_Color backgroundColor2 = { 255, 255, 255 ,255};
+    SDL_Color backgroundColor = { 155, 155, 255 ,255};
+//    SDL_Color backgroundColor2 = { 255, 255, 255 ,255};
 
-	glClearColor(0.2, 0.30, 0.4, 1.0);
+	glClearColor(0.0, 0.00, 0.0, 1.0);
+//	glClearColor(1.0,1.0,1.0,1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_RenderClear(ren);
-	SDL_Rect Message_rect;
-	TTF_Font* Sans = TTF_OpenFont("FreeSans.ttf",14);
-	if (Sans == NULL){
-		std::cout << "TTF FreeSans failed to load."<<std::endl; //Diagnostic
-		return 1;
+	if (TextureID2==0){
+		TTF_Font* Sans = TTF_OpenFont("FreeSans.ttf",24);
+		if (Sans == NULL){
+			std::cout << "TTF FreeSans failed to load."<<std::endl; //Diagnostic
+			return 1;
+		}
+		std::cout<<" 1 "<< std::endl;
+		SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,text.c_str(), White,backgroundColor);
+//		SDL_Surface* sSans = TTF_RenderText_Solid(Sans,text.c_str(), White);
+		std::cout<<" 2 "<< std::endl;
+//		SDL_Surface* sSans2 = CS(0,128,128,sSans);
+		SDL_Surface* sSans2 = SDL_CreateRGBSurface( 0,1024,32,24,0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
+		std::cout<<" 3 "<<sSans->format->Rmask<<std::dec<<static_cast<int>(sSans2->format->BytesPerPixel)<<std::dec<<std::endl;
+//		int Width=256;
+//		int Height=256;
+//		SDL_Surface* sSans2;
+//		SDL_Rect srcrect;
+		SDL_Rect dstrect;
+//		srcrect.x=0;
+//		srcrect.y=0;
+//		srcrect.w=sSans->w;
+//		srcrect.h=sSans->h;
+		dstrect.x=0;
+		dstrect.y=0;
+		dstrect.w=sSans2->w;//256;
+		dstrect.h=sSans2->h;//256;
+//		Uint8 * pixel = (Uint8*)sSans->pixels;
+		for (int i =0; i<12; i++){
+			for (int j =0; j<10; j++){
+			std::cout <<"-"<<static_cast<int>(get_pixel32(sSans,j,i))<<std::hex<<"-";
+			}
+			std::cout<< std::endl;
+		}
+//		SDL_BlitSurface
+//		SDL_BlitScaled(sSans,&srcrect,sSans2,&dstrect);
+		int foo=SDL_BlitSurface(sSans,NULL,sSans2,&dstrect);
+
+		std::cout<<" 4 "<<dstrect.w<<" x "<<dstrect.h<<" foo "<<foo<< std::endl;
+		for (int i =0; i<10; i++){
+			for (int j =0; j<10; j++){
+			std::cout <<"-"<<static_cast<int>(get_pixel32(sSans2,j,i))<<std::hex<<"-";
+			}
+			std::cout<< std::endl;
+		}
+		glGenTextures(1, &TextureID2);
+		glBindTexture(GL_TEXTURE_2D, TextureID2);
+		int Mode = GL_RGB;
+		if(sSans2->format->BytesPerPixel == 4) {
+			Mode = GL_RGBA;
+			std::cout <<sSans->w<<" RGBAx "<<sSans->h<<"  "<<glGetError()<<" "<< std::endl;
+		}
+		if(sSans->format->BytesPerPixel == 4) {
+			std::cout <<sSans2->w<<" SANS RGBA "<<sSans2->h<<"  "<<glGetError()<<" "<< std::endl;
+		}
+		std::cout<<" 5 "<< std::endl;
+		std::cout <<sSans2->w<<" x "<<sSans2->h<<"  "<<glGetError()<<" "<< std::endl;
+		std::cout <<sSans->w<<" x "<<sSans->h<<"  "<<glGetError()<<" "<< std::endl;
+		glTexImage2D(GL_TEXTURE_2D, 0, Mode, sSans2->w, sSans2->h, 0, Mode, GL_UNSIGNED_BYTE, sSans2->pixels);
+	 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		std::cout<<" 6 "<< std::endl;
+		sizew=sSans2->w;
+		sizeh=sSans2->h;
+		SDL_FreeSurface(sSans);
+		std::cout <<sizew<<" x "<<sizeh<<" "<<TextureID2<<" "<<glGetError()<< std::endl;
 	}
+//	0.0,-0.20,-0.50	//Any other glTex* stuff here
+	float originx,originy,originz,delta;
+	originx=-0.0;
+	originy=0.0;
+	originz=-0.50;
+	delta=0.0;
+	sizew=2.0;
+	sizeh=0.1061250;
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, TextureID2);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+/*
+	glBegin(GL_QUADS);
+	//side F
+	    glTexCoord2f(0.0,0.0);
+	glVertex3f(originx,originy,originz+delta);
+	    glTexCoord2f(1.0,0.0);
+	glVertex3f(originx+sizew,originy,originz+delta);
+	    glTexCoord2f(1.0,1.0);
+	glVertex3f(originx+sizew,originy+sizeh,originz+delta);
+	    glTexCoord2f(0.0,1.0);
+	glVertex3f(originx,originy+sizeh,originz+delta);
+	glEnd();
+*/
+//	glRotatef(180.0,1.0,0.0,0.0);
+/*
+	glBegin(GL_QUADS);
+	//side F
+	    glTexCoord2f(0.0,0.0);
+	glVertex3f(originx,originy,originz+delta);
+	    glTexCoord2f(1.0,0.0);
+	glVertex3f(originx+sizew,originy,originz+delta);
+	    glTexCoord2f(1.0,1.0);
+	glVertex3f(originx+sizew,originy+sizeh,originz+delta);
+	    glTexCoord2f(0.0,1.0);
+	glVertex3f(originx,originy+sizeh,originz+delta);
+	glEnd();
+*/
+	originy=01.0;
+	originx=-1.0;
+	glBindTexture(GL_TEXTURE_2D, TextureID2);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+//	glRotatef(180,1.0,0.0,0.0);
 
-	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans,text.c_str(), White);
-	SDL_Texture* Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	glBegin(GL_QUADS);
+	//side F
+	    glTexCoord2f(0.0,0.0);
+	glVertex3f(originx,originy,originz+delta);
+	    glTexCoord2f(1.0,0.0);
+	glVertex3f(originx+sizew,originy,originz+delta);
+	    glTexCoord2f(1.0,1.0);
+	glVertex3f(originx+sizew,originy-sizeh,originz+delta);
+	    glTexCoord2f(0.0,1.0);
+	glVertex3f(originx,originy-sizeh,originz+delta);
+	glEnd();
 
-try {
-	Message_rect.x = 0;  //Top left
-	Message_rect.y = 0;
-	SDL_QueryTexture(Message, NULL, NULL ,&iW, &iH);
-	Message_rect.w = iW;
-	Message_rect.h = iH;
-	SDL_SetTextureBlendMode(Message,SDL_BLENDMODE_NONE);
-	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
-	SDL_GL_SwapWindow(win);
+//	glRotatef(180,0.0,1.0,0.0);
+/*
+	glBegin(GL_QUADS);
+	//side F
+	    glTexCoord2f(0.0,0.0);
+	glVertex3f(originx,originy,originz+delta);
+	    glTexCoord2f(1.0,0.0);
+	glVertex3f(originx+sizew,originy,originz+delta);
+	    glTexCoord2f(1.0,1.0);
+	glVertex3f(originx+sizew,originy+sizeh,originz+delta);
+	    glTexCoord2f(0.0,1.0);
+	glVertex3f(originx,originy+sizeh,originz+delta);
+	glEnd();
+*/
+//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 	SDL_RenderPresent(ren);
+#ifdef _WIN32
+	SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#endif
 	SDL_Delay(howLong);
-	}
-	catch( ... ) {
-		std::cout << "TTF Sans surface created to texture ERROR"<<std::endl;
-	}
-		surfaceMessage = TTF_RenderText_Shaded(Sans,text.c_str(), White,backgroundColor2);
-		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
-//		SDL_RenderPresent(ren);
-		glColor4f(1.0,1.0,1.0,1.0);
-		glClearColor(1.0,1.0,1.0,1.0);
+	glColor4f(1.0,1.0,1.0,1.0);
+	glClearColor(1.0,1.0,1.0,1.0);
 //		SDL_DestroyTexture(Message);
-//		SDL_FreeSurface(surfaceMessage);
 		return 0;
 }
 //Rotating Texture
@@ -197,6 +330,7 @@ int Rotex(SDL_Renderer *ren, SDL_Window *win, int howLong) {
 		rotation+=1.0;
 		SDL_Delay(10);
 	}
+	SDL_RenderCopyEx(ren, tex, NULL, NULL,0.0,NULL,SDL_FLIP_NONE);
 	SDL_DestroyTexture(tex);
 	return 0;
 
@@ -263,7 +397,6 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
  * |        |
  * 4--------3
  */
-	double rotation=0.1;
 	glClearColor(0.30, 0.30, 0.30, 1.0);
 	float delta=0.03;
 	glLineWidth(3.0);
@@ -501,7 +634,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 			return 4;
 		}
 
-		GLuint TextureID = 0;
+//		GLuint TextureID = 0;
 
 		// You should probably use CSurface::OnLoad ... ;)
 		//-- and make sure the Surface pointer is good!
@@ -537,7 +670,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 			glClear(GL_COLOR_BUFFER_BIT);
 			SDL_RenderClear(ren);
 			glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-			glRotatef(rotation,1.0,0.5,0.3);
+//			glRotatef(rotation,1.0,0.5,0.3);
 			glBegin(GL_QUADS);
 			//side F
  		    glTexCoord2f(0.0,0.0);
@@ -609,8 +742,8 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 			//  		SDL_RenderCopyEx(ren, tex, NULL, NULL,rotation,NULL,SDL_FLIP_NONE);
 			//  		SDL_RenderPresent(ren);
 			//		SDL_GL_SwapWindow(win);
-//			rotation+=0.010;
-//			glRotatef(rotation,1.0,0.5,0.3);
+			rotation+=0.010;
+			glRotatef(rotation,1.0,0.50,0.0);
 			SDL_RenderPresent(ren);
 #ifdef _WIN32
 			SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
@@ -619,6 +752,14 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 			process_events();
 			if (keyScape>0){break;}
 		}
+//		rotation=0.0;
+		glClear(GL_COLOR_BUFFER_BIT);
+		SDL_RenderClear(ren);
+		glRotatef(0.0,0.0,0.0,0.0);
+		SDL_RenderPresent(ren);
+#ifdef _WIN32
+		SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+#endif
 //	    if (tex) {
 //	        SDL_GL_UnbindTexture(tex);
 //	    }
@@ -651,8 +792,9 @@ glPushMatrix();
 glLoadIdentity();
 		testErr=blackTriangle(ren,win,200);
 		testErr=drawLine1(ren,win,400);
-		testErr=drawBoxPLS(ren, win,100,0.5,6,15,0.0,-0.20,-0.50);
 		testErr=Triangles(ren, win,  200);
+		testErr=TestText(ren, win, "Simple variable size TTF text Version 0.46 24pt (16/17 px)",2000);
+		testErr=drawBoxPLS(ren, win,100,0.5,6,8,0.0,-0.20,-0.50);
 glPopMatrix();
 glMatrixMode(GL_MODELVIEW);
 glPushMatrix();
