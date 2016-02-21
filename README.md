@@ -1,3 +1,7 @@
+Changes in this version (0.51) 2-20-2016
+added SDL2 sound,mouse handler,keys and started separating headers and modules plus the usual typo-allergenic problems
+
+Fixed lots of interesting bugs and now the rest of the code can be ported easily. It is about a million lines of code and so the next big push will be a complete application.
 
 Changes in this version (0.4) 2-17-2016
 tested 3D BOX, lines, points, textured quads 
@@ -8,7 +12,6 @@ Also the texture copy feature operates differently and changes blend characteris
 Changes in this version (0.3) 2-16-2016
 Added ttf (true type font) text as texture
 Added **SDL2_ttf** as library for Linux or TTF does not work properly
-
 
 ##STAGE 1
 
@@ -22,11 +25,11 @@ It is also fully functional on Linux
 
 http://paulmotey.github.io/
 
-- [ ] Move includes to header file
+- [x] Move includes to header file
 - [x] Separate OPENGL graphics to a module (graphics)
-- [ ] Create a keyboard command interface for modes
+- [x] Create a keyboard command interface for modes
 - [ ] Create WebGL and Application personalities
-- [ ] Create mouse command interface
+- [x] Create mouse command interface
 - [ ] Port modules for buttons and menus
 - [ ] Port all test modules
 - [ ] Identify capabilities and operate within them
@@ -36,8 +39,9 @@ http://paulmotey.github.io/
 - [x] can markdown be converted to HTML **YES pandoc -f markdown_github x.md > x.html**
 - [X] can assimp operate in Windows OS? **YES**
 - [ ] how does QT work across platforms
-- [ ] what fonts are available
-- [ ] how to open camera and sound interfaces
+- [x] what fonts are available
+- [x] how to open sound interfaces
+- [ ] how to open camera interfaces
 - [ ] signal fault handler and debug
 - [ ] opencv
 - [ ] python
@@ -48,6 +52,7 @@ http://paulmotey.github.io/
 - [ ] 3D to matter interface for printers
 - [ ] 4D to action interface for printers
 - [ ] AI integration
+- [ ] Temporal engineering code
 
 
 ##Windows only problems

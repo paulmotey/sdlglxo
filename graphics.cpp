@@ -20,7 +20,7 @@ std::string font ("FreeMono.ttf");
 //char font="FreeSans.ttf";
 int fontSize=26;
 int VersionMajor=0;
-int VersionMinor=50;
+int VersionMinor=51;
 
 std::string getResourcePath(const std::string &subDir = "") {
 #ifdef _WIN32
