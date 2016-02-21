@@ -4,8 +4,8 @@
  *  Created on: Feb 6, 2016
  *      Author: motey
  */
-#include "headers/main.h"
 
+#include "headers/main.h"
 #define SSTR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
 

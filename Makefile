@@ -13,7 +13,7 @@ else
 #    LIBS = -lC:\Users\motey\Downloads\SDL2-devel-2.0.3-VC\SDL2-2.0.3\lib\x64\SDL2.lib -lSDL2 -lws2_32
     WINC = -Wl,-Bstatic
     LIBS = 
-    LIBSB = -lSDL2main -lSDL2   -lSDL2_image  -lopengl32 -lws2_32
+    LIBSB = -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_image  -lopengl32 -lws2_32
     INCL= -L\Users\motey\Downloads\SDL2-2.0.3\lib
     INC= -I\Users\motey\Downloads\SDL2-2.0.3\include
 endif

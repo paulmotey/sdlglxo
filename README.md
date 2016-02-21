@@ -1,5 +1,5 @@
 
-Made file deletions on the server (.cproject) of untracked files and I want to see if that creates a problem for commits.
+Made file deletions on the server (.cproject) of untracked files and I want to see if that creates a problem for commits. (Which it does) "non-fast forward" error
 
 Changes in this version (0.51) 2-20-2016
 added SDL2 sound,mouse handler,keys and started separating headers and modules plus the usual typo-allergenic problems

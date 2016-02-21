@@ -26,13 +26,3 @@
 *.exe
 *.out
 *.app
-
-# Various
-*.db
-*.mk
-*.settings
-sdlmain.exe
-.project
-.cproject
-makefile
-/Release/

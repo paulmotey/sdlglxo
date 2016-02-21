@@ -4,6 +4,7 @@
  *  Created on: Dec 27, 2015
  *      Author: motey
  */
+
 #include "headers/main.h"
 extern int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context);
 extern int startSDL (void);

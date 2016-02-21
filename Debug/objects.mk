@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS :=
+LIBS := -lSDL_mixer -lSDL -lSDL_sound
 
