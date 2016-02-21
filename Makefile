@@ -5,7 +5,7 @@ UNAME := $(shell uname)
 
 ifneq (, $(findstring linux, $(SYS)))
     MACHINE=-DLINUX
-	LIBS =	-lz -lGL -lSDL2 -lSDL2_image -lSDL_mixer -lSDL2_ttf    # Do linux things
+	LIBS =	-lz -lGL -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf    # Do linux things
 	LIBSB =
 	WINC = 
 else
