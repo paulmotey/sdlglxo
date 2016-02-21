@@ -2,15 +2,25 @@
  * sdlmain.c
  *
  *  Created on: Dec 27, 2015
- *      Author: motey
+ *      Authors: Motey, Alice Infinity
  */
 #include "headers/main.h"
 extern int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context);
-extern int startSDL (void);
-extern int stopSDL (void);
+extern int SDL_Sound_start (void);
+extern int SDL_Sound_stop (void);
 extern int playSound(char playName[],int channel[],int errnum,Mix_Chunk *sound, int SDLvolume,int left, int right);
 
 int main(int argc, char** argv) {
+/* Sound subsystem */
+	//	char playClick[]="sounds/sine.wav";
+	//	char playClick[]="sounds/thisme.wav";
+	char playClick[]="sounds/click.wav";
+		int channel=-1;
+		int errnum=0;
+		int* channelp=&channel;
+		Mix_Chunk *sound = NULL;
+/* Sound subsystem */
+
 	SDL_GLContext context; /* opengl context handle */
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
@@ -35,13 +45,6 @@ SDL_RENDERER_ACCELERATED: use hardware accelerated rendering
 SDL_RENDERER_PRESENTVSYNC: renderer's present function
 (update screen) to be synchronized with the monitor's refresh rate
 */
-//	char playClick[]="sounds/sine.wav";
-	char playClick[]="sounds/click.wav";
-//	char playClick[]="sounds/thisme.wav";
-	int channel=-1;
-	int errnum=0;
-	int* channelp=&channel;
-	Mix_Chunk *sound = NULL;
 SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (ren == nullptr) {
 		SDL_DestroyWindow(win);
@@ -55,19 +58,21 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 		SDL_DestroyWindow(win);
 		return 55;
 	}
-	startSDL ();
+	SDL_Sound_start ();
 	playSound(playClick,channelp,errnum,sound,18,255,255);//	float m[16];
-//	glGetFloatv(GL_PROJECTION_MATRIX,m);
-//	std::cout<<"PROJECTION "<<std::endl;
-//			std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;
-//			std::cout<<m[4]<<" "<<m[5]<<" "<<m[6]<<" "<<m[7]<<std::endl;
-//			std::cout<<m[8]<<" "<<m[9]<<" "<<m[10]<<" "<<m[11]<<std::endl;
-//			std::cout<<m[12]<<" "<<m[13]<<" "<<m[14]<<" "<<m[15]<<std::endl;
+/* Matrix debug code
+ 	glGetFloatv(GL_PROJECTION_MATRIX,m);
+	std::cout<<"PROJECTION "<<std::endl;
+	std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;
+	std::cout<<m[4]<<" "<<m[5]<<" "<<m[6]<<" "<<m[7]<<std::endl;
+	std::cout<<m[8]<<" "<<m[9]<<" "<<m[10]<<" "<<m[11]<<std::endl;
+	std::cout<<m[12]<<" "<<m[13]<<" "<<m[14]<<" "<<m[15]<<std::endl;
+*/
 	GlSdlTest1(ren, win, context);
+	SDL_Sound_stop ();
 	SDL_DestroyRenderer(ren);
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(win);
-	stopSDL();
 	SDL_Quit();
 	return 0;
 }
