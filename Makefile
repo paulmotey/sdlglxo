@@ -1,11 +1,11 @@
-MODULES = graphics.o
+MODULES = graphics.o SDL_sound.o
 MODULESL = graphics.o
 SYS := $(shell gcc -dumpmachine)
 UNAME := $(shell uname)
 
 ifneq (, $(findstring linux, $(SYS)))
     MACHINE=-DLINUX
-	LIBS =	-lz -lGL -lSDL2 -lSDL2_image -lSDL2_ttf    # Do linux things
+	LIBS =	-lz -lGL -lSDL2 -lSDL2_image lSDL2_mixer -lSDL2_ttf    # Do linux things
 	LIBSB =
 	WINC = 
 else
@@ -24,7 +24,7 @@ CFLAGS = -g
 PROJECTM	=	sdlmain
 
 
-HOBJECTS := $(wildcard Headers/Ants2016*.h)
+HOBJECTS := $(wildcard Headers/*.h)
 #COBJECTS := $(wildcard $(PROJECT)*.cpp)
 #OOBJECTS := $(patsubst %.cpp,%.o,$(wildcard $(PROJECT)*.cpp))
 OBJS = 
@@ -40,6 +40,8 @@ DEPENDS	= 	$(HOBJECTS) Makefile
 all:   graphics.o $(PROJECTM)
 
 graphics.o: graphics.cpp 
+	$(CC) -c  $(MACHINE) $<
+SDL_Sound.o: SDL_Sound.cpp 
 	$(CC) -c  $(MACHINE) $<
 	
 	

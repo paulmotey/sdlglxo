@@ -4,33 +4,16 @@
  *  Created on: Feb 6, 2016
  *      Author: motey
  */
-#define SDLTWO
-#ifdef _WIN32
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include <windows.h>
-#include <GL/GL.h>
-#endif
-#ifdef LINUX
-#ifdef SDLTWO
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-#else
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
-#endif
-#include <SDL/SDL_ttf.h>
-#include <GL/gl.h>
-#endif
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <locale>
-#include <sstream>
+#include "headers/main.h"
+int sprintfCPP()
+{
+  std::string name = "c++";
+  int age = 10;
+  std::ostringstream out;
+  out << "language: " << name << ", age: " << age;
+  std::cout << out.str() << '\n';
+  return 0;
+}
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
@@ -42,13 +25,11 @@ int keyScape=0;
 double rotation=0.1;
 int debug=0;
 float sizew,sizeh;
-float Twidth=1.0;
-float TQwidth=1.0;
 std::string font ("FreeMono.ttf");
 //char font="FreeSans.ttf";
 int fontSize=26;
 int VersionMajor=0;
-int VersionMinor=49;
+int VersionMinor=50;
 
 std::string getResourcePath(const std::string &subDir = "") {
 #ifdef _WIN32
@@ -149,6 +130,7 @@ int Triangles(SDL_Renderer *ren, SDL_Window *win, int howLong){
 }
 
 /*
+ * reference code 'create sdl surface'
 SDL_Surface* CS(Uint32 flags,int width,int height,const SDL_Surface* display)
 {
   // 'display' is the surface whose format you want to match
@@ -168,11 +150,23 @@ Uint8 get_pixel32(SDL_Surface *surface, int x, int y){	//Convert pixels to 32 bi
 
 static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
 	SDL_Color White = {255, 255, 255, 255}; //Text color
-    SDL_Color backgroundColor = { 155, 155, 255 ,255};
-	glClearColor(0.50, 0.50, 0.50, 1.0);
+    SDL_Color backgroundColor = { 55, 55, 55 ,255};
+	SDL_Rect dstrect;
+
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glColor4f(1.0,1.0,1.0,1.0);
+
+	float originx,originy,originz,delta;
+	int Mode = GL_RGB;
+	int i,j;
+	float Twidth=1.0;
+	float TQwidth=1.0;
+
+
+
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_RenderClear(ren);
+
 	if (TextureID2==0){
 		TTF_Font* Sans = TTF_OpenFont(font.c_str(),fontSize);
 		if (Sans == NULL){
@@ -182,14 +176,13 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 		SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,text.c_str(), White,backgroundColor);
 //		SDL_Surface* sSans = TTF_RenderText_Solid(Sans,text.c_str(), White);
 		SDL_Surface* sSans2 = SDL_CreateRGBSurface( 0,1024,32,24,0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
-		SDL_Rect dstrect;
 		dstrect.x=2;
 		dstrect.y=2;
 		dstrect.w=sSans2->w-4;
 		dstrect.h=sSans2->h-4;
 		if(debug>0){
-			for (int i =0; i<12; i++){
-				for (int j =0; j<10; j++){
+			for ( i =0; i<12; i++){
+				for ( j =0; j<10; j++){
 					std::cout <<"-"<<static_cast<int>(get_pixel32(sSans,j,i))<<std::hex<<"-";
 				}
 				std::cout<< std::endl;
@@ -197,8 +190,8 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 		}
 		SDL_BlitSurface(sSans,NULL,sSans2,&dstrect);
 		if(debug>0){
-			for (int i =0; i<10; i++){
-				for (int j =0; j<10; j++){
+			for (i =0; i<10; i++){
+				for ( j =0; j<10; j++){
 					std::cout <<"-"<<static_cast<int>(get_pixel32(sSans2,j,i))<<std::hex<<"-";
 				}
 				std::cout<< std::endl;
@@ -206,7 +199,6 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 		}
 		glGenTextures(1, &TextureID2);
 		glBindTexture(GL_TEXTURE_2D, TextureID2);
-		int Mode = GL_RGB;
 		if(sSans2->format->BytesPerPixel == 4) {
 			Mode = GL_RGBA;
 			std::cout <<sSans->w<<" RGBAx "<<sSans->h<<"  "<<glGetError()<<" "<< std::endl;
@@ -223,9 +215,6 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 		sizeh=sSans2->h;
 		SDL_FreeSurface(sSans);
 	}
-	float originx,originy,originz,delta;
-	originx=-0.0;
-	originy=0.0;
 	originz=-0.50;
 	delta=0.0;
 	sizew=TQwidth;	// or 2.0;
@@ -233,7 +222,7 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, TextureID2);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	originy=01.0;
+	originy=1.0;
 	originx=-1.0;
 	glBindTexture(GL_TEXTURE_2D, TextureID2);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -256,7 +245,7 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 	glClearColor(1.0,1.0,1.0,1.0);
 	glDeleteTextures(1,&TextureID2);
 	TextureID2=0;
-		return 0;
+	return 0;
 }
 
 //Rotating Texture
@@ -718,16 +707,14 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 
 //A triangle, text and then a texture
 int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
-	float m[16];
-	std::string fontDef;
-	if (TTF_Init() < 0) {return 55;}
-	glGetFloatv(GL_PROJECTION_MATRIX,m);
+//	float m[16];
+//	glGetFloatv(GL_PROJECTION_MATRIX,m);
 //	std::cout<<"PROJECTION "<<std::endl;
 //	std::cout<<std::setw(2)<<m[0]<<"\t "<<std::setw(2)<<m[1]<<"\t "<<m[2]<<"\t "<<m[3]<<std::endl;
 //	std::cout<<m[4]<<"\t "<<m[5]<<"\t "<<m[6]<<"\t "<<m[7]<<std::endl;
 //	std::cout<<m[8]<<"\t "<<m[9]<<"\t "<<m[10]<<"\t "<<m[11]<<std::endl;
 //	std::cout<<m[12]<<"\t "<<m[13]<<"\t "<<m[14]<<"\t "<<m[15]<<std::endl;
-
+	if (TTF_Init() < 0) {return 55;}
 	while ((keyScape == 0) && (testErr ==0)){
 glMatrixMode(GL_PROJECTION);
 glPushMatrix();
@@ -738,7 +725,6 @@ glLoadIdentity();
 		process_events();if(keyScape==1){break;}
 		testErr=Triangles(ren, win,  200);
 #ifdef LINUX
-//		fontDef="Esc exit - Version 0.47 Linux "+font;
 		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
 #endif
 #ifdef _WIN32
@@ -753,7 +739,7 @@ glPushMatrix();
 #ifdef _WIN32
 		testErr=Rotex(ren, win, 30);
 		process_events();if(keyScape==1){break;}
-		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
+		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
 glPopMatrix();
 		process_events();if(keyScape==1){break;}

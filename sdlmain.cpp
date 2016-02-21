@@ -4,31 +4,11 @@
  *  Created on: Dec 27, 2015
  *      Author: motey
  */
-#define SDLTWO
-#ifdef _WIN32
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include <windows.h>
-#include <GL/GL.h>
-#endif
-#ifdef LINUX
-#ifdef SDLTWO
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-#else
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
-#endif
-#include <SDL/SDL_ttf.h>
-#include <GL/gl.h>
-#endif
-#include <iostream>
-#include <string>
+#include "headers/main.h"
 extern int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context);
+extern int startSDL (void);
+extern int stopSDL (void);
+extern int playSound(char playName[],int channel[],int errnum,Mix_Chunk *sound, int SDLvolume,int left, int right);
 
 int main(int argc, char** argv) {
 	SDL_GLContext context; /* opengl context handle */
@@ -55,6 +35,13 @@ SDL_RENDERER_ACCELERATED: use hardware accelerated rendering
 SDL_RENDERER_PRESENTVSYNC: renderer's present function
 (update screen) to be synchronized with the monitor's refresh rate
 */
+//	char playClick[]="sounds/sine.wav";
+//	char playClick[]="sounds/click.wav";
+	char playClick[]="sounds/thisme.wav";
+	int channel=-1;
+	int errnum=0;
+	int* channelp=&channel;
+	Mix_Chunk *sound = NULL;
 SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (ren == nullptr) {
 		SDL_DestroyWindow(win);
@@ -62,8 +49,14 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 		SDL_Quit();
 		return 3;
 	}
-	float m[16];
-	if (TTF_Init() < 0) {return 55;}
+	if (TTF_Init() < 0) {
+		SDL_DestroyRenderer(ren);
+		SDL_GL_DeleteContext(context);
+		SDL_DestroyWindow(win);
+		return 55;
+	}
+	startSDL ();
+	playSound(playClick,channelp,errnum,sound,18,255,255);//	float m[16];
 //	glGetFloatv(GL_PROJECTION_MATRIX,m);
 //	std::cout<<"PROJECTION "<<std::endl;
 //			std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;
@@ -74,6 +67,7 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 	SDL_DestroyRenderer(ren);
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(win);
+	stopSDL();
 	SDL_Quit();
 	return 0;
 }
