@@ -24,7 +24,7 @@ CFLAGS = -g
 PROJECTM	=	sdlmain
 
 
-HOBJECTS := $(wildcard Headers/*.h)
+HOBJECTS := $(wildcard headers/*.h)
 #COBJECTS := $(wildcard $(PROJECT)*.cpp)
 #OOBJECTS := $(patsubst %.cpp,%.o,$(wildcard $(PROJECT)*.cpp))
 OBJS = 
