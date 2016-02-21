@@ -1,16 +1,16 @@
 /**
- * Contributors: Motey, Alice
+ * Contributor: Motey Alice
  FIXME the channel stuff is really a silly implementation
- FIXME So who is supposed to do the FIXME?
- It would seem that it is either worthy of fixing or not
-What needs to be "fixed" specifically?
 */
 #include "headers/main.h"
+int startSDL (void);
+int stopSDL (void);
+int playSound (char * playName,int channel[],int errnum,Mix_Chunk *sound, int volume, int left, int right);
 
 int sprintfCPP(std::string text1,std::string text2,std::string text3,std::string text4)
 {
   std::ostringstream out;
-  out << text1 << text2 << text3 << text4 <<std::endl;
+  out << text1 << text2 << text3 << std::endl;
   std::cout << out.str();
   return 0;
 }
@@ -26,8 +26,6 @@ int Err_Print_SDL( int  errno2, char *namish ) {
 			sprintfCPP("SDL err = [ ",Mix_GetError() ,"] ","");break;
 		case 4:
 			sprintfCPP("Unable to play WAV file: [", Mix_GetError(),"]","");break;
-		case 5:
-			sprintfCPP("Error cases test: [", Mix_GetError(),"] sound=",namish);break;
 		default :
 		break;
 	}
@@ -49,18 +47,17 @@ int SDL_err=3;
 	Mix_SetPanning(channel[0],left,right);
 	Mix_Playing(-1);
 	Mix_VolumeMusic(SDLvolume);
-//	Err_Print_SDL(5,playName); //diagnostic
 	return errnum;
 }
 
-int SDL_Sound_stop(void) {
+int stopSDL(void) {
 	if  ( SDL_available!=0){return 1;}
 	Mix_CloseAudio();
 	SDL_Quit();
 	return 0;
 }
 
-int SDL_Sound_start (void) {
+int startSDL (void) {
 int errState=0;
 int audio_rate = 22050;
 Uint16 audio_format = AUDIO_S16SYS;
@@ -76,7 +73,8 @@ int audio_buffers = 4096;
 			 audio_buffers) != 0)
 		{errState=2;}
 	}
-	SDL_available=errState;	//audio_channels=Mix_AllocateChannels(32);
+	SDL_available=errState;
+	//audio_channels=Mix_AllocateChannels(32);
 	return errState;
 }
 
