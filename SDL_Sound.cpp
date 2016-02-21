@@ -2,13 +2,6 @@
  * Contributor: Motey Alice
  FIXME the channel stuff is really a silly implementation
 */
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include <windows.h>
-#include <GL/GL.h>
-
 #include "headers/main.h"
 int startSDL (void);
 int stopSDL (void);
