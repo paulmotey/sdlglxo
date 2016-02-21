@@ -1,3 +1,13 @@
+Did a seriously foolish thing then:
+
+Did a pull and it wiped out my .cproject and .project files ARGHHH!
+
+:boom: :scream: :cry: :confused: :sob: :rage: :pray: :hourglass: :shipit:
+
+
+
+:sunglasses: Fixed now but took an hour to restore flags/libs/paths/compiler and such
+
 
 Made file deletions on the server (.cproject) of untracked files and I want to see if that creates a problem for commits. (Which it does) "non-fast forward" error
 
