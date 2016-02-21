@@ -36,8 +36,8 @@ SDL_RENDERER_PRESENTVSYNC: renderer's present function
 (update screen) to be synchronized with the monitor's refresh rate
 */
 //	char playClick[]="sounds/sine.wav";
-//	char playClick[]="sounds/click.wav";
-	char playClick[]="sounds/thisme.wav";
+	char playClick[]="sounds/click.wav";
+//	char playClick[]="sounds/thisme.wav";
 	int channel=-1;
 	int errnum=0;
 	int* channelp=&channel;

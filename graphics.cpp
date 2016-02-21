@@ -5,15 +5,6 @@
  *      Author: motey
  */
 #include "headers/main.h"
-int sprintfCPP()
-{
-  std::string name = "c++";
-  int age = 10;
-  std::ostringstream out;
-  out << "language: " << name << ", age: " << age;
-  std::cout << out.str() << '\n';
-  return 0;
-}
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()

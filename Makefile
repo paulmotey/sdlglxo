@@ -1,11 +1,11 @@
-MODULES = graphics.o SDL_sound.o
+MODULES = graphics.o SDL_Sound.o
 MODULESL = graphics.o
 SYS := $(shell gcc -dumpmachine)
 UNAME := $(shell uname)
 
 ifneq (, $(findstring linux, $(SYS)))
     MACHINE=-DLINUX
-	LIBS =	-lz -lGL -lSDL2 -lSDL2_image lSDL2_mixer -lSDL2_ttf    # Do linux things
+	LIBS =	-lz -lGL -lSDL2 -lSDL2_image -lSDL_mixer -lSDL2_ttf    # Do linux things
 	LIBSB =
 	WINC = 
 else
@@ -37,10 +37,11 @@ OBJECTS = 	$(OBJS)
 DEPENDS	= 	$(HOBJECTS) Makefile 
 
 .PHONY: all
-all:   graphics.o $(PROJECTM)
+all:   graphics.o SDL_Sound.o $(PROJECTM)
 
 graphics.o: graphics.cpp 
 	$(CC) -c  $(MACHINE) $<
+
 SDL_Sound.o: SDL_Sound.cpp 
 	$(CC) -c  $(MACHINE) $<
 	
