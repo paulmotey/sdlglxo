@@ -1,6 +1,7 @@
 /**
  * Contributor: Motey, Alice
  FIXME the channel stuff is really a silly implementation
+ I have no idea what is wrong with channels, who can explain?
 */
 #include "headers/main.h"
 int startSDL (void);
