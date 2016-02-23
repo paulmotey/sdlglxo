@@ -1,3 +1,8 @@
+Did another silly thing and then fixed it
+pull deleted some stuff and had to create new project and create project from local git
+
+
+
 Did a seriously foolish thing then:
 
 Did a pull and it wiped out my .cproject and .project files ARGHHH!
