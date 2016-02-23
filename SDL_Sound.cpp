@@ -1,5 +1,5 @@
 /**
- * Contributor: Motey Alice
+ * Contributor: Motey, Alice
  FIXME the channel stuff is really a silly implementation
 */
 #include "headers/main.h"

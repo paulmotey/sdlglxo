@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+
+Debug
+Release
+.cproject
+.project
+FreeMono.ttf
+FreeSans.ttf
+.settings
+res/Thumbs.db
