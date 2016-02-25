@@ -16,9 +16,9 @@ int keyScape=0;
 double rotation=0.1;
 int debug=0;
 float sizew,sizeh;
-std::string font ("FreeMono.ttf");
-//char font="FreeSans.ttf";
-int fontSize=26;
+//std::string font ("FreeMono.ttf");
+std::string font ("FreeSans.ttf");
+int fontSize=20;
 int VersionMajor=0;
 int VersionMinor=51;
 
@@ -140,11 +140,12 @@ Uint8 get_pixel32(SDL_Surface *surface, int x, int y){	//Convert pixels to 32 bi
 
 
 static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
-	SDL_Color White = {255, 255, 255, 255}; //Text color
-    SDL_Color backgroundColor = { 55, 55, 55 ,255};
+
+	SDL_Color TextBackgroundColor = {255, 255, 255, 255}; //Text color
+    SDL_Color TextColor = { 0, 0, 22 ,255};
 	SDL_Rect dstrect;
 
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(0.50, 0.50, 0.50, 1.0);
 	glColor4f(1.0,1.0,1.0,1.0);
 
 	float originx,originy,originz,delta;
@@ -164,7 +165,7 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 			std::cout << "TTF FreeSans failed to load."<<std::endl; //Diagnostic
 			return 1;
 		}
-		SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,text.c_str(), White,backgroundColor);
+		SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,text.c_str(), TextColor,TextBackgroundColor);
 //		SDL_Surface* sSans = TTF_RenderText_Solid(Sans,text.c_str(), White);
 		SDL_Surface* sSans2 = SDL_CreateRGBSurface( 0,1024,32,24,0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
 		dstrect.x=2;
