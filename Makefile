@@ -1,10 +1,11 @@
-MODULES1 := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
-MODULES2 := $(patsubst src/%.cpp,%.o,$(wildcard src/*.cpp))
-MODULES = $(MODULES1) $(MODULES2)
-SRC1 := $(wildcard src/*.cpp)
-SRC := $(wildcard *.cpp) $(SRC1)
+MODULES1 = src/mainMenu.o src/textureLoad.o graphics.o SDL_Sound.o
+MODULES2 = mainMenu.o textureLoad.o graphics.o SDL_Sound.o
+#MODULES1 := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+#MODULES2 := $(patsubst src/%.cpp,src/%.o,$(wildcard src/*.cpp))
+MODULES = $(MODULES1) 
+SRC1 := src/mainMenu.cpp  src/textureLoad.cpp graphics.cpp SDL_Sound.cpp
+SRC =  $(SRC1)
 
-# mainMenu.o graphics.o SDL_Sound.o
 SYS := $(shell gcc -dumpmachine)
 UNAME := $(shell uname)
 
@@ -22,8 +23,10 @@ else
     INCL= -L\Users\motey\Downloads\SDL2-2.0.3\lib
     INC= -I\Users\motey\Downloads\SDL2-2.0.3\include
 endif
-CC=g++
-CFLAGS = -g 
+CC=g++ -g -std=c++0x
+CCP=g++ -g -std=c++0x
+CFLAGS = -g -std=c++0x
+CXXFLAGS = -g -std=c++0x
 
 
 PROJECTM	=	sdlmain
@@ -43,14 +46,16 @@ DEPENDS	= 	$(HOBJECTS) Makefile
 .PHONY: all
 all:   $(MODULES) $(PROJECTM)
 
-*.o: $(SRC)
-	$(CC) -c  $(MACHINE) $<
 
-#SDL_Sound.o: SDL_Sound.cpp 
-#	$(CC) -c  $(MACHINE) $<
-#	
-#mainMenu.o: src/mainMenu.cpp
-#	$(CC) -c  $(MACHINE) $<
+SDL_Sound.o: SDL_Sound.cpp 
+	$(CC) -c  $(MACHINE) $<
+	
+src/mainMenu.o: src/mainMenu.cpp
+	$(CC) -c  $(MACHINE) $<
+	
+src/textureLoad.o: src/textureLoad.cpp
+	$(CC) -c  $(MACHINE) $<
+	
 	
 	
 $(PROJECTM):  $(PROJECTM).cpp $(DEPENDS) $(MODULES) 
@@ -58,5 +63,5 @@ $(PROJECTM):  $(PROJECTM).cpp $(DEPENDS) $(MODULES)
 	@echo $(INC)
 	@echo $(SYS)
 	 
-	$(CC) $(MACHINE) $(INCLUDES) $(PROJECTM).cpp $(INC) $(MODULES) $(INCL) $(WINC) $(LIBS) $(LIBSB) -o $(PROJECTM) $(OBJECTS) 
+	$(CC) $(MACHINE) $(INCLUDES) $(PROJECTM).cpp $(INC) $(MODULES2) $(INCL) $(WINC) $(LIBS) $(LIBSB) -o $(PROJECTM) $(OBJECTS) 
 

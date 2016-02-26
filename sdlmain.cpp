@@ -40,6 +40,7 @@ SDL_RENDERER_PRESENTVSYNC: renderer's present function
 */
 //	char playClick[]="sounds/sine.wav";
 	char playClick[]="sounds/click.wav";
+	char tfile[]="textures";
 //	char playClick[]="sounds/thisme.wav";
 	int channel=-1;
 	int errnum=0;
@@ -60,7 +61,7 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 	}
 	startSDL ();
 	playSound(playClick,channelp,errnum,sound,18,255,255);//	float m[16];
-	createTextures("textures");
+	createTextures(tfile);
 //	glGetFloatv(GL_PROJECTION_MATRIX,m);
 //	std::cout<<"PROJECTION "<<std::endl;
 //			std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;
