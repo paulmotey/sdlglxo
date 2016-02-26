@@ -1,5 +1,10 @@
-MODULES = mainMenu.o graphics.o SDL_Sound.o
-MODULESL = graphics.o
+MODULES1 := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+MODULES2 := $(patsubst src/%.cpp,%.o,$(wildcard src/*.cpp))
+MODULES = $(MODULES1) $(MODULES2)
+SRC1 := $(wildcard src/*.cpp)
+SRC := $(wildcard *.cpp) $(SRC1)
+
+# mainMenu.o graphics.o SDL_Sound.o
 SYS := $(shell gcc -dumpmachine)
 UNAME := $(shell uname)
 
@@ -23,7 +28,6 @@ CFLAGS = -g
 
 PROJECTM	=	sdlmain
 
-
 HOBJECTS := $(wildcard headers/*.h)
 #COBJECTS := $(wildcard $(PROJECT)*.cpp)
 #OOBJECTS := $(patsubst %.cpp,%.o,$(wildcard $(PROJECT)*.cpp))
@@ -37,16 +41,16 @@ OBJECTS = 	$(OBJS)
 DEPENDS	= 	$(HOBJECTS) Makefile 
 
 .PHONY: all
-all:   mainMenu.o graphics.o SDL_Sound.o $(PROJECTM)
+all:   $(MODULES) $(PROJECTM)
 
-graphics.o: graphics.cpp 
+*.o: $(SRC)
 	$(CC) -c  $(MACHINE) $<
 
-SDL_Sound.o: SDL_Sound.cpp 
-	$(CC) -c  $(MACHINE) $<
-	
-mainMenu.o: src/mainMenu.cpp
-	$(CC) -c  $(MACHINE) $<
+#SDL_Sound.o: SDL_Sound.cpp 
+#	$(CC) -c  $(MACHINE) $<
+#	
+#mainMenu.o: src/mainMenu.cpp
+#	$(CC) -c  $(MACHINE) $<
 	
 	
 $(PROJECTM):  $(PROJECTM).cpp $(DEPENDS) $(MODULES) 

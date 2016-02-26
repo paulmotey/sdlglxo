@@ -10,7 +10,7 @@ extern int TestMenu(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
-
+extern unsigned int texture[256];
 GLuint TextureID2 = 0;
 GLuint TextureID = 0;
 int testErr=0;
@@ -18,7 +18,7 @@ int keyScape=0;
 double rotation=0.1;
 int debug=0;
 float sizew,sizeh;
-//std::string font ("FreeMono.ttf");
+//std::string fontDeux ("FreeMono.ttf");
 std::string font ("FreeSans.ttf");
 int fontSize=20;
 int VersionMajor=0;
@@ -691,6 +691,115 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 			process_events();
 			if (keyScape>0){break;}
 		}
+		rotation=0.5;
+		delta=0.0;
+		if (types & 16){
+			glBindTexture(GL_TEXTURE_2D, texture[100]);
+	//		glEnable(GL_DEPTH_TEST);
+	//		glEnable(GL_COLOR_MATERIAL);
+			glFrontFace(GL_CW);
+	//		glDisable(GL_LIGHTING);
+			glEnable(GL_CULL_FACE);
+			glEnable(GL_TEXTURE_2D);
+	        glBindTexture(GL_TEXTURE_2D, texture[100]);
+			for (int i = 0; i < howLong; ++i) {
+				glClear(GL_COLOR_BUFFER_BIT);
+				SDL_RenderClear(ren);
+				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+				glBegin(GL_QUADS);
+				//side F
+	 		    glTexCoord2f(0.0,0.0);
+				glVertex3f(originx,originy,originz+delta);
+	 		    glTexCoord2f(1.0,0.0);
+				glVertex3f(originx+size,originy,originz+delta);
+	 		    glTexCoord2f(1.0,1.0);
+				glVertex3f(originx+size,originy+size,originz+delta);
+	 		    glTexCoord2f(0.0,1.0);
+				glVertex3f(originx,originy+size,originz+delta);
+				glEnd();
+
+		        glBindTexture(GL_TEXTURE_2D, texture[101]);
+//				glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+				glBegin(GL_QUADS);
+				//side R
+	 		    glTexCoord2f(0.0,0.0);
+				glVertex3f(originx+size+delta,originy,originz);
+	 		    glTexCoord2f(1.0,0.0);
+				glVertex3f(originx+size+delta,originy,originz+size);
+	 		    glTexCoord2f(1.0,1.0);
+				glVertex3f(originx+size+delta,originy+size,originz+size);
+	 		    glTexCoord2f(0.0,1.0);
+				glVertex3f(originx+size+delta,originy+size,originz);
+				glEnd();
+
+		        glBindTexture(GL_TEXTURE_2D, texture[102]);
+//				glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+				glBegin(GL_QUADS);
+				//side L
+			    glTexCoord2f(0.0,0.0);
+				glVertex3f(originx+delta,originy,originz+size);
+			    glTexCoord2f(1.0,0.0);
+				glVertex3f(originx+delta,originy,originz);
+			    glTexCoord2f(1.0,1.0);
+				glVertex3f(originx+delta,originy+size,originz);
+			    glTexCoord2f(0.0,1.0);
+				glVertex3f(originx+delta,originy+size,originz+size);
+				glEnd();
+
+		        glBindTexture(GL_TEXTURE_2D, texture[103]);
+				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+				glBegin(GL_QUADS);
+				//side B
+			    glTexCoord2f(0.0,0.0);
+				glVertex3f(originx+size,originy,originz+size+delta);
+			    glTexCoord2f(1.0,0.0);
+				glVertex3f(originx,originy,originz+size+delta);
+			    glTexCoord2f(1.0,1.0);
+				glVertex3f(originx,originy+size,originz+size+delta);
+			    glTexCoord2f(0.0,1.0);
+				glVertex3f(originx+size,originy+size,originz+size+delta);
+				glEnd();
+
+		        glBindTexture(GL_TEXTURE_2D, texture[104]);
+//				glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
+				glBegin(GL_QUADS);
+				//side D
+			    glTexCoord2f(0.0,0.0);
+				glVertex3f(originx,originy+size+delta,originz);
+			    glTexCoord2f(1.0,0.0);
+				glVertex3f(originx+size,originy+size+delta,originz);
+			    glTexCoord2f(1.0,1.0);
+				glVertex3f(originx+size,originy+size+delta,originz+size);
+			    glTexCoord2f(0.0,1.0);
+				glVertex3f(originx,originy+size+delta,originz+size);
+				glEnd();
+
+		        glBindTexture(GL_TEXTURE_2D, texture[105]);
+//		        glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+				glBegin(GL_QUADS);
+				//side U
+			    glTexCoord2f(0.0,0.0);
+				glVertex3f(originx,originy+delta,originz+size);
+			    glTexCoord2f(1.0,0.0);
+				glVertex3f(originx+size,originy+delta,originz+size);
+			    glTexCoord2f(1.0,1.0);
+				glVertex3f(originx+size,originy+delta,originz);
+			    glTexCoord2f(0.0,1.0);
+				glVertex3f(originx,originy+delta,originz);
+
+
+				glEnd();
+				rotation+=0.010;
+				glRotatef(rotation,1.0,0.50,0.0);
+				SDL_RenderPresent(ren);
+	#ifdef _WIN32
+				SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
+	#endif
+				SDL_Delay(10);
+				process_events();
+				if (keyScape>0){break;}
+			}
+		}
 		glClear(GL_COLOR_BUFFER_BIT);
 		SDL_RenderClear(ren);
 		glRotatef(0.0,0.0,0.0,0.0);
@@ -726,13 +835,13 @@ glLoadIdentity();
 		testErr=Triangles(ren, win,  200);
 #ifdef LINUX
 		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
-		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
+		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
 #ifdef _WIN32
 		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
 #endif
 		process_events();if(keyScape==1){break;}
-		testErr=drawBoxPLS(ren, win,50,0.5,6,15,0.0,-0.20,-0.50);
+		testErr=drawBoxPLS(ren, win,50,0.5,6,31,0.0,-0.20,-0.50);
 		process_events();if(keyScape==1){break;}
 glPopMatrix();
 glMatrixMode(GL_MODELVIEW);

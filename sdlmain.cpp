@@ -10,6 +10,8 @@ extern int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext contex
 extern int startSDL (void);
 extern int stopSDL (void);
 extern int playSound(char playName[],int channel[],int errnum,Mix_Chunk *sound, int SDLvolume,int left, int right);
+extern void createTextures(char *texture_list);
+extern void destroyTextures();
 
 int main(int argc, char** argv) {
 	SDL_GLContext context; /* opengl context handle */
@@ -58,6 +60,7 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 	}
 	startSDL ();
 	playSound(playClick,channelp,errnum,sound,18,255,255);//	float m[16];
+	createTextures("textures");
 //	glGetFloatv(GL_PROJECTION_MATRIX,m);
 //	std::cout<<"PROJECTION "<<std::endl;
 //			std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;
@@ -65,6 +68,7 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 //			std::cout<<m[8]<<" "<<m[9]<<" "<<m[10]<<" "<<m[11]<<std::endl;
 //			std::cout<<m[12]<<" "<<m[13]<<" "<<m[14]<<" "<<m[15]<<std::endl;
 	GlSdlTest1(ren, win, context);
+	destroyTextures();
 	SDL_DestroyRenderer(ren);
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(win);

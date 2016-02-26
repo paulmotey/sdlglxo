@@ -9,6 +9,13 @@
 
 
 /*
+ * Menu text for each item
+ * Pointer to code to execute
+ * Which is selected
+ * Escape exits sub task and returns to main task
+ * Select by position on screen
+ * Map screen to element
+ * Basic screen is 512x512
 */
 
 #include "../headers/main.h"
