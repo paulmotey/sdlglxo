@@ -6,6 +6,8 @@
  */
 
 #include "headers/main.h"
+extern int TestMenu(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong);
+
 #define SSTR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
 
@@ -133,6 +135,12 @@ SDL_Surface* CS(Uint32 flags,int width,int height,const SDL_Surface* display)
                   fmt.Rmask,fmt.Gmask,fmt.Bmask,fmt.Amask );
 }
 */
+
+
+/*
+ * This is handled in mainMenu and just left here until that is complete
+ * and global texture control is implemented for models and objects and environments
+ */
 Uint8 get_pixel32(SDL_Surface *surface, int x, int y){	//Convert pixels to 32 bits
 	Uint8 *pixels = (Uint8*)surface->pixels;
 	return pixels[(3*y*surface->w) + x];
@@ -720,7 +728,7 @@ glLoadIdentity();
 		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
 #endif
 #ifdef _WIN32
-		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
+		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
 #endif
 		process_events();if(keyScape==1){break;}
 		testErr=drawBoxPLS(ren, win,50,0.5,6,15,0.0,-0.20,-0.50);
