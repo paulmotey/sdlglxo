@@ -29,7 +29,7 @@ int TestMenu(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
 	GLuint TextureID3 = 0;
 
 	SDL_Color TextBackgroundColor = {255, 255, 255, 255}; //Text color
-    SDL_Color TextColor = { 88, 0, 22 ,255};
+    SDL_Color TextColor = { 188, 0, 22 ,255};
 	SDL_Rect dstrect;
 
 	glClearColor(0.50, 0.50, 0.50, 1.0);

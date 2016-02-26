@@ -1,4 +1,4 @@
-MODULES = graphics.o SDL_Sound.o
+MODULES = mainMenu.o graphics.o SDL_Sound.o
 MODULESL = graphics.o
 SYS := $(shell gcc -dumpmachine)
 UNAME := $(shell uname)
@@ -37,12 +37,15 @@ OBJECTS = 	$(OBJS)
 DEPENDS	= 	$(HOBJECTS) Makefile 
 
 .PHONY: all
-all:   graphics.o SDL_Sound.o $(PROJECTM)
+all:   mainMenu.o graphics.o SDL_Sound.o $(PROJECTM)
 
 graphics.o: graphics.cpp 
 	$(CC) -c  $(MACHINE) $<
 
 SDL_Sound.o: SDL_Sound.cpp 
+	$(CC) -c  $(MACHINE) $<
+	
+mainMenu.o: src/mainMenu.cpp
 	$(CC) -c  $(MACHINE) $<
 	
 	
