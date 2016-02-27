@@ -22,7 +22,7 @@ float sizew,sizeh;
 std::string font ("FreeSans.ttf");
 int fontSize=20;
 int VersionMajor=0;
-int VersionMinor=51;
+int VersionMinor=53;
 
 std::string getResourcePath(const std::string &subDir = "") {
 #ifdef _WIN32

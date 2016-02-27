@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
 }
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	SDL_Window *win = SDL_CreateWindow("SDL2 OpenGL WL V0.52", 1200, 200, 512,512, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+	SDL_Window *win = SDL_CreateWindow("SDL2 OpenGL WL V0.53", 1200, 200, 512,512, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	if (win == nullptr) {
 		std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl; return 2;
 	}
