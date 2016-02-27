@@ -844,11 +844,11 @@ glLoadIdentity();
 //		process_events();if(keyScape==1){break;}
 //		testErr=Triangles(ren, win,  200);
 #ifdef LINUX
-		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
+		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",2000);
 		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
 #ifdef _WIN32
-		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
+		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",3000);
 #endif
 		process_events();if(keyScape==1){break;}
 		testErr=drawBoxPLS(ren, win,250,0.5,6,16,0.0,-0.20,-0.50);
