@@ -12,7 +12,7 @@ extern int stopSDL (void);
 extern int playSound(char playName[],int channel[],int errnum,Mix_Chunk *sound, int SDLvolume,int left, int right);
 extern void createTextures(char *texture_list);
 extern void destroyTextures();
-
+extern int buildMenu();
 int main(int argc, char** argv) {
 	SDL_GLContext context; /* opengl context handle */
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -62,6 +62,7 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 	startSDL ();
 	playSound(playClick,channelp,errnum,sound,18,255,255);//	float m[16];
 	createTextures(tfile);
+	buildMenu();
 //	glGetFloatv(GL_PROJECTION_MATRIX,m);
 //	std::cout<<"PROJECTION "<<std::endl;
 //			std::cout<<m[0]<<" "<<m[1]<<" "<<m[2]<<" "<<m[3]<<std::endl;

@@ -693,9 +693,11 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 			process_events();
 			if (keyScape>0){break;}
 		}
+	}
 		rotation=0.5;
 		delta=0.0;
 		if (types & 16){
+
 			glEnable(GL_BLEND);
 			glEnable(GL_CULL_FACE);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -706,8 +708,11 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 	//		glDisable(GL_LIGHTING);
 			glEnable(GL_CULL_FACE);
 			glEnable(GL_TEXTURE_2D);
-	        glBindTexture(GL_TEXTURE_2D, texture[tbase+100]);
+			glClear(GL_COLOR_BUFFER_BIT);
+			SDL_RenderClear(ren);
+//	        glBindTexture(GL_TEXTURE_2D, texture[tbase+100]);
 			for (int i = 0; i < howLong; ++i) {
+		        glBindTexture(GL_TEXTURE_2D, texture[tbase+100]);
 				glClear(GL_COLOR_BUFFER_BIT);
 				SDL_RenderClear(ren);
 				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -795,7 +800,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 
 				glEnd();
 				rotation+=0.010;
-				glRotatef(rotation,1.0,0.50,0.0);
+				glRotatef(rotation,1.0,0.50,0.20);
 				SDL_RenderPresent(ren);
 	#ifdef _WIN32
 				SDL_GL_SwapWindow(win);	/* Wait 2 seconds =2000 */
@@ -816,7 +821,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_CULL_FACE);
 
-	}
+
 	return 0;
 }
 
@@ -834,26 +839,26 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 glMatrixMode(GL_PROJECTION);
 glPushMatrix();
 glLoadIdentity();
-		testErr=blackTriangle(ren,win,200);
-		process_events();if(keyScape==1){break;}
-		testErr=drawLine1(ren,win,200);
-		process_events();if(keyScape==1){break;}
-		testErr=Triangles(ren, win,  200);
+//		testErr=blackTriangle(ren,win,200);
+//		process_events();if(keyScape==1){break;}
+//		testErr=drawLine1(ren,win,200);
+//		process_events();if(keyScape==1){break;}
+//		testErr=Triangles(ren, win,  200);
 #ifdef LINUX
 		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
-		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
+//		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
 #ifdef _WIN32
 		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
 #endif
 		process_events();if(keyScape==1){break;}
-		testErr=drawBoxPLS(ren, win,50,0.5,6,31,0.0,-0.20,-0.50);
+		testErr=drawBoxPLS(ren, win,250,0.5,6,16,0.0,-0.20,-0.50);
 		process_events();if(keyScape==1){break;}
 glPopMatrix();
 glMatrixMode(GL_MODELVIEW);
 glPushMatrix();
 #ifdef _WIN32
-		testErr=Rotex(ren, win, 30);
+//		testErr=Rotex(ren, win, 30);
 		process_events();if(keyScape==1){break;}
 		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
