@@ -351,6 +351,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
  * |        |
  * 4--------3
  */
+	int tbase=10;
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
 	glClearColor(0.30, 0.30, 0.30, 1.0);
@@ -694,14 +695,17 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 		rotation=0.5;
 		delta=0.0;
 		if (types & 16){
-			glBindTexture(GL_TEXTURE_2D, texture[100]);
+			glEnable(GL_BLEND);
+			glEnable(GL_CULL_FACE);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, texture[tbase+100]);
 	//		glEnable(GL_DEPTH_TEST);
 	//		glEnable(GL_COLOR_MATERIAL);
 			glFrontFace(GL_CW);
 	//		glDisable(GL_LIGHTING);
 			glEnable(GL_CULL_FACE);
 			glEnable(GL_TEXTURE_2D);
-	        glBindTexture(GL_TEXTURE_2D, texture[100]);
+	        glBindTexture(GL_TEXTURE_2D, texture[tbase+100]);
 			for (int i = 0; i < howLong; ++i) {
 				glClear(GL_COLOR_BUFFER_BIT);
 				SDL_RenderClear(ren);
@@ -718,7 +722,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 				glVertex3f(originx,originy+size,originz+delta);
 				glEnd();
 
-		        glBindTexture(GL_TEXTURE_2D, texture[101]);
+		        glBindTexture(GL_TEXTURE_2D, texture[tbase+101]);
 //				glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 				glBegin(GL_QUADS);
 				//side R
@@ -732,7 +736,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 				glVertex3f(originx+size+delta,originy+size,originz);
 				glEnd();
 
-		        glBindTexture(GL_TEXTURE_2D, texture[102]);
+		        glBindTexture(GL_TEXTURE_2D, texture[tbase+102]);
 //				glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 				glBegin(GL_QUADS);
 				//side L
@@ -746,7 +750,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 				glVertex3f(originx+delta,originy+size,originz+size);
 				glEnd();
 
-		        glBindTexture(GL_TEXTURE_2D, texture[103]);
+		        glBindTexture(GL_TEXTURE_2D, texture[tbase+103]);
 				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				glBegin(GL_QUADS);
 				//side B
@@ -760,7 +764,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 				glVertex3f(originx+size,originy+size,originz+size+delta);
 				glEnd();
 
-		        glBindTexture(GL_TEXTURE_2D, texture[104]);
+		        glBindTexture(GL_TEXTURE_2D, texture[tbase+104]);
 //				glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
 				glBegin(GL_QUADS);
 				//side D
@@ -774,7 +778,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 				glVertex3f(originx,originy+size+delta,originz+size);
 				glEnd();
 
-		        glBindTexture(GL_TEXTURE_2D, texture[105]);
+		        glBindTexture(GL_TEXTURE_2D, texture[tbase+105]);
 //		        glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
 				glBegin(GL_QUADS);
 				//side U
@@ -800,6 +804,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 				if (keyScape>0){break;}
 			}
 		}
+		glDisable(GL_BLEND);
 		glClear(GL_COLOR_BUFFER_BIT);
 		SDL_RenderClear(ren);
 		glRotatef(0.0,0.0,0.0,0.0);

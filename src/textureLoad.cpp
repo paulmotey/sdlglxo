@@ -65,7 +65,7 @@ if (fs.is_open()) {
     	std::istringstream iss(each_line);
     	if (!(iss >> texture_name >> a >> b)) { break; } // error
     	std::cout<<texture_name<<" is texture # "<<a<<" absolute defined as "<<b<<std::endl;
-    	ImageLoadSdl(a,texture_name.c_str(),0);
+    	ImageLoadSdl(a,texture_name.c_str(),1);
     }
   fs.close();
 }else{

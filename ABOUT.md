@@ -1,3 +1,7 @@
+Textures added -- generated with Graphmagick to produce characters and numbers
+
+
+
 This file more or less documents the problems and discoveries while creating this repo
 
 
