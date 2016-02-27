@@ -52,11 +52,14 @@ return 0;
 
 void createTextures(char *texture_list) {
 int i;
+int verbose=0;
 std::string texture_name;
 int a,b;
 std::fstream fs;
 std::string each_line;
-std::cout<<"No problem yet with ["<<texture_list<<"]"<<std::endl;
+if( verbose==1){
+	std::cout<<"No problem yet with ["<<texture_list<<"]"<<std::endl;
+}
 glGenTextures(texture_count, &texture[0]);
 for(i=0;i<MAXTEX;i++){envFiles[i]=NULL;} //Clear environment textures
 fs.open (texture_list, std::fstream::in | std::fstream::out | std::fstream::app);
@@ -64,8 +67,10 @@ if (fs.is_open()) {
     while (std::getline(fs,each_line)){
     	std::istringstream iss(each_line);
     	if (!(iss >> texture_name >> a >> b)) { break; } // error
-    	std::cout<<texture_name<<" is texture # "<<a<<" absolute defined as "<<b<<std::endl;
-    	ImageLoadSdl(a,texture_name.c_str(),1);
+    	if( verbose==1){
+    		std::cout<<texture_name<<" is texture # "<<a<<" absolute defined as "<<b<<std::endl;
+    	}
+    	ImageLoadSdl(a,texture_name.c_str(),verbose);
     }
   fs.close();
 }else{

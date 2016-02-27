@@ -50,6 +50,9 @@ all:   $(MODULES) $(PROJECTM)
 SDL_Sound.o: SDL_Sound.cpp 
 	$(CC) -c  $(MACHINE) $<
 	
+graphics.o: graphics.cpp 
+	$(CC) -c  $(MACHINE) $<
+	
 src/mainMenu.o: src/mainMenu.cpp
 	$(CC) -c  $(MACHINE) $<
 	
