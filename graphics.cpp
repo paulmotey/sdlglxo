@@ -355,6 +355,7 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
 	glClearColor(0.30, 0.30, 0.30, 1.0);
+    SDL_SetRenderDrawColor(ren, 80, 80, 80, 255);
 	float delta=0.03;
 	glLineWidth(3.0);
 	glPointSize(4.0);
