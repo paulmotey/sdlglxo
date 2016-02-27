@@ -31,8 +31,7 @@ std::string getResourcePath(const std::string &subDir = "") {
 	const char PATH_SEP = '/';
 #endif
 	static std::string baseRes;
-	if (baseRes.empty()) {
-		char *basePath = SDL_GetBasePath();
+	if (baseRes.empty()) {		char *basePath = SDL_GetBasePath();
 		if (basePath) {
 			baseRes = basePath;
 			SDL_free(basePath);
@@ -846,7 +845,7 @@ glLoadIdentity();
 //		testErr=Triangles(ren, win,  200);
 #ifdef LINUX
 		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
-//		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
+		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
 #ifdef _WIN32
 		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
