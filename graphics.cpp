@@ -7,6 +7,7 @@
 
 #include "headers/main.h"
 extern int TestMenu(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong);
+extern void process_events( void );
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
@@ -44,45 +45,6 @@ std::string getResourcePath(const std::string &subDir = "") {
 		baseRes = baseRes.substr(0, pos) + "res" + PATH_SEP;
 	}
 	return subDir.empty() ? baseRes : baseRes + subDir + PATH_SEP;
-}
-
-static void process_events( void ){
-    SDL_Event event;
-    while( SDL_PollEvent( &event ) ) {
-        switch( event.type ) {
-        case SDL_KEYDOWN:
-            switch( event.key.keysym.sym ){
-            	case SDLK_ESCAPE:
-            		keyScape=1; //EXIT
-            		break;
-            	case SDLK_LEFT:
-            		std::cout << "<Left" << std::endl;
-            		break;
-                case SDLK_RIGHT:
-            		std::cout << "Right> " << std::endl;
-                    break;
-                case SDLK_UP:
-            		std::cout << "^Up^" << std::endl;
-                    break;
-                case SDLK_DOWN:
-            		std::cout << "\\Down/" << std::endl;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case SDL_QUIT:
-    		keyScape=1;
-            /* Handle quit requests (like Ctrl-c). */
-            break;
-        case SDL_MOUSEBUTTONDOWN:
-//            std::cout<<"Mouse button pressed"<<std::endl;
-            break;
-        case SDL_MOUSEMOTION:
-//            std::cout<<"Mouse move to "<<event.motion.x<<" "<<event.motion.y <<std::endl;
-            break;
-        }
-    }
 }
 
 int Triangles(SDL_Renderer *ren, SDL_Window *win, int howLong){

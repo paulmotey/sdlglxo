@@ -20,7 +20,8 @@
 
 #include "../headers/main.h"
 extern unsigned int texture[256];
-
+extern int mousex;
+extern int mousey;
 #define SSTR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
 
@@ -75,20 +76,20 @@ int buildMenu(){
 		menuItems[i].name=mi;
 		mi6=mi.c_str();
 		menuItems[i].swidth=strlen(mi6);
-//		mi.std::string::c_str().length;
+		//		mi.std::string::c_str().length;
 
 	}
 	int Mode = GL_RGB;
-//	float Twidth=1.0;
-//	float TQwidth=1.0;
+	//	float Twidth=1.0;
+	//	float TQwidth=1.0;
 	for ( i=0; i<16; i++){
 		TTF_Font* Sans = TTF_OpenFont(menuFont.c_str(),menuFontSize);
-			if (Sans == NULL){
-				std::cout << "Menu font "<<menuFont.c_str()<<" failed to load."<<std::endl;
-				return 1;
-			}
+		if (Sans == NULL){
+			std::cout << "Menu font "<<menuFont.c_str()<<" failed to load."<<std::endl;
+			return 1;
+		}
 		SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,menuItems[i].name.c_str(), menuTextColor,menuTextBackgroundColor);
-//		SDL_Surface* sSans = TTF_RenderText_Solid(Sans,text.c_str(), White);
+		//		SDL_Surface* sSans = TTF_RenderText_Solid(Sans,text.c_str(), White);
 		SDL_Surface* sSans2 = SDL_CreateRGBSurface( 0,1024,32,24,0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
 		dstrect.x=borderSize;
 		dstrect.y=borderSize;
@@ -106,10 +107,10 @@ int buildMenu(){
 
 		menuItems[i].sizew=1.02*((float)(sSans->w)/(float)(sSans2->w));
 
-//		TQwidth=1.0*((float)(sSans->w)/(float)(512));
+		//		TQwidth=1.0*((float)(sSans->w)/(float)(512));
 		glTexImage2D(GL_TEXTURE_2D, 0, Mode, sSans2->w, sSans2->h, 0, Mode, GL_UNSIGNED_BYTE, sSans2->pixels);
-	 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		sizew=sSans2->w;
 		sizeh=sSans2->h;
 
@@ -119,13 +120,57 @@ int buildMenu(){
 	}
 	return 0;
 }
+int buildOneMenu(std::string mi, int element){
+//	menuItems[0].name="Item 1";
+	int sizew,sizeh;
+	int Mode = GL_RGB;
+	const char *mi6;
+	SDL_Rect dstrect;
+	menuItems[element].name=mi;
+	mi6=mi.c_str();
+	menuItems[element].swidth=strlen(mi6);
+	TTF_Font* Sans = TTF_OpenFont(menuFont.c_str(),menuFontSize);
+	if (Sans == NULL){
+		std::cout << "Menu font "<<menuFont.c_str()<<" failed to load."<<std::endl;
+		return 1;
+	}
+	SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,menuItems[element].name.c_str(), menuTextColor,menuTextBackgroundColor);
+	SDL_Surface* sSans2 = SDL_CreateRGBSurface( 0,1024,32,24,0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
+	dstrect.x=borderSize;
+	dstrect.y=borderSize;
+	dstrect.w=sSans2->w;
+	dstrect.h=sSans2->h;
+	SDL_BlitSurface(sSans,NULL,sSans2,&dstrect);
+	glBindTexture(GL_TEXTURE_2D, texture[element+menuTextures]);
+	if(sSans2->format->BytesPerPixel == 4) {
+		Mode = GL_RGBA;
+		std::cout <<sSans->w<<" RGBAx "<<sSans->h<<"  "<<glGetError()<<" "<< std::endl;
+	}
+	if(sSans->format->BytesPerPixel == 4) {
+		std::cout <<sSans2->w<<" SANS RGBA "<<sSans2->h<<"  "<<glGetError()<<" "<< std::endl;
+	}
+
+	menuItems[element].sizew=1.02*((float)(sSans->w)/(float)(sSans2->w));
+	glTexImage2D(GL_TEXTURE_2D, 0, Mode, sSans2->w, sSans2->h, 0, Mode, GL_UNSIGNED_BYTE, sSans2->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	sizew=sSans2->w;
+	sizeh=sSans2->h;
+
+	menuItems[element].w = sizew;
+	menuItems[element].h = sizeh;
+	SDL_FreeSurface(sSans);
+	return 0;
+}
 
 
 int TestMenu(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong){
 //	std::string font ("FreeSans.ttf");
 	float sizew,sizeh;
 	int i=0;
-
+	buildOneMenu(" [ 1 ] Run all graphic primitive tests and see how long this is Mx = "\
+			+patch::to_string(mousex)+" My = "+patch::to_string(mousey)+"<<",1);
+	buildOneMenu("       TESTS of SDL OpenGL primitives, IO, images, textures and sound         ",0);
 	glClearColor(0.50, 0.50, 0.50, 1.0);
 	glColor4f(1.0,1.0,1.0,1.0);
 
