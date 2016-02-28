@@ -1,4 +1,4 @@
-MODULES1 = src/mainMenu.o src/textureLoad.o graphics.o SDL_Sound.o
+MODULES1 = src/mouseControl.o src/mainMenu.o src/textureLoad.o graphics.o SDL_Sound.o
 MODULES2 = mouseControl.o mainMenu.o textureLoad.o graphics.o SDL_Sound.o
 #MODULES1 := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 #MODULES2 := $(patsubst src/%.cpp,src/%.o,$(wildcard src/*.cpp))
