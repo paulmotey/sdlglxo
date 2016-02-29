@@ -318,8 +318,8 @@ int drawBoxPLS(SDL_Renderer *ren, SDL_Window *win, int howLong,float size, int f
 	glClearColor(0.30, 0.30, 0.30, 1.0);
     SDL_SetRenderDrawColor(ren, 80, 80, 80, 255);
 	float delta=0.03;
-	glLineWidth(3.0);
-	glPointSize(4.0);
+	glLineWidth(1.0);
+	glPointSize(1.0);
 	if (types & 1){
 		for (int i = 0; i < howLong; ++i) {
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -800,27 +800,27 @@ int GlSdlTest1(	SDL_Renderer *ren , SDL_Window *win ,SDL_GLContext context){
 glMatrixMode(GL_PROJECTION);
 glPushMatrix();
 glLoadIdentity();
-//		testErr=blackTriangle(ren,win,200);
-//		process_events();if(keyScape==1){break;}
-//		testErr=drawLine1(ren,win,200);
-//		process_events();if(keyScape==1){break;}
-//		testErr=Triangles(ren, win,  200);
+		testErr=blackTriangle(ren,win,200);
+		process_events();if(keyScape==1){break;}
+		testErr=drawLine1(ren,win,200);
+		process_events();if(keyScape==1){break;}
+		testErr=Triangles(ren, win,  200);
 #ifdef LINUX
-		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",2000);
+		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
 		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
 #ifdef _WIN32
-		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",3000);
+		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
 #endif
 		process_events();if(keyScape==1){break;}
-		testErr=drawBoxPLS(ren, win,250,0.5,6,16,0.0,-0.20,-0.50);
+		testErr=drawBoxPLS(ren, win,30,0.5,6,rand()%32,0.0,-0.20,-0.50);
 		process_events();if(keyScape==1){break;}
 glPopMatrix();
 glMatrixMode(GL_MODELVIEW);
 glPushMatrix();
 #ifdef _WIN32
 //		testErr=Rotex(ren, win, 30);
-		process_events();if(keyScape==1){break;}
+//		process_events();if(keyScape==1){break;}
 		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
 #endif
 glPopMatrix();
