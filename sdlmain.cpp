@@ -76,5 +76,6 @@ SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_R
 	SDL_DestroyWindow(win);
 	stopSDL();
 	SDL_Quit();
+	TTF_Quit();
 	return 0;
 }

@@ -43,9 +43,11 @@ struct menuItem
 
 menuItem menuItems[16];
 int menuTextures=84; //84-99 =16
-std::string menuFont ("FreeSans.ttf");
-//std::string menuFont ("FreeMono.ttf");
 
+
+std::string menuFont ("FreeSerif.ttf");
+//std::string menuFont ("FreeSans.ttf");
+//std::string menuFont ("FreeMono.ttf");
 int menuFontSize=20;
 int borderSize=0;
 
@@ -85,7 +87,9 @@ int buildMenu(){
 	for ( i=0; i<16; i++){
 		TTF_Font* Sans = TTF_OpenFont(menuFont.c_str(),menuFontSize);
 		if (Sans == NULL){
-			std::cout << "Menu font "<<menuFont.c_str()<<" failed to load."<<std::endl;
+			std::cout << "Menu font \""<<menuFont.c_str()<<"\" size "<<menuFontSize<<". Failed to load."<<std::endl;
+			std::cout << "The font \""<<menuFont.c_str()<<"\" is not included in the source."<<std::endl;
+			std::cout << "It has to be copied to the directory where the program is run."<<std::endl;
 			return 1;
 		}
 		SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,menuItems[i].name.c_str(), menuTextColor,menuTextBackgroundColor);

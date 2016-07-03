@@ -6,6 +6,7 @@
  */
 
 #include "headers/main.h"
+#define MACHINE_DELAY 2000
 extern int TestMenu(SDL_Renderer *ren,SDL_Window *win, std::string text,int howLong);
 extern void process_events( void );
 
@@ -20,7 +21,7 @@ double rotation=0.1;
 int debug=0;
 float sizew,sizeh;
 //std::string fontDeux ("FreeMono.ttf");
-std::string font ("FreeSans.ttf");
+extern std::string menuFont ;
 int fontSize=20;
 int VersionMajor=0;
 int VersionMinor=53;
@@ -129,9 +130,9 @@ static int TestText(SDL_Renderer *ren,SDL_Window *win, std::string text,int howL
 	SDL_RenderClear(ren);
 
 	if (TextureID2==0){
-		TTF_Font* Sans = TTF_OpenFont(font.c_str(),fontSize);
+		TTF_Font* Sans = TTF_OpenFont(menuFont.c_str(),fontSize);
 		if (Sans == NULL){
-			std::cout << "TTF FreeSans failed to load."<<std::endl; //Diagnostic
+			std::cout << "TTF font failed to load."<<std::endl; //Diagnostic
 			return 1;
 		}
 		SDL_Surface* sSans = TTF_RenderText_Shaded(Sans,text.c_str(), TextColor,TextBackgroundColor);
@@ -806,11 +807,11 @@ glLoadIdentity();
 		process_events();if(keyScape==1){break;}
 		testErr=Triangles(ren, win,  200);
 #ifdef LINUX
-		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GL ",1000);
-		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
+		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+menuFont+" "+SSTR(fontSize)+" GL ",MACHINE_DELAY);
+		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Linux "+menuFont+" "+SSTR(fontSize)+" GLSDL ",MACHINE_DELAY);
 #endif
 #ifdef _WIN32
-		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GL ",1000);
+		testErr=TestMenu(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+menuFont+" "+SSTR(fontSize)+" GL ",MACHINE_DELAY);
 #endif
 		process_events();if(keyScape==1){break;}
 		testErr=drawBoxPLS(ren, win,30,0.5,6,rand()%32,0.0,-0.20,-0.50);
@@ -821,7 +822,7 @@ glPushMatrix();
 #ifdef _WIN32
 //		testErr=Rotex(ren, win, 30);
 //		process_events();if(keyScape==1){break;}
-		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+font+" "+SSTR(fontSize)+" GLSDL ",1000);
+		testErr=TestText(ren, win, " Esc exit - Version "+SSTR(VersionMajor)+"."+SSTR(VersionMinor)+" Windows "+menuFont+" "+SSTR(fontSize)+" GLSDL ",MACHINE_DELAY);
 #endif
 glPopMatrix();
 		process_events();if(keyScape==1){break;}
